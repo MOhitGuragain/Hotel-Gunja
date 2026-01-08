@@ -11,25 +11,43 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // USERS = STAFF ONLY (Admin, Manager, Receptionist, Cashier)
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone')->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // Role relationship
+            $table->foreignId('role_id')
+                  ->constrained('roles')
+                  ->cascadeOnDelete();
+
+            // Staff active/inactive
+            $table->boolean('is_active')->default(true);
+
             $table->rememberToken();
             $table->timestamps();
         });
 
+        // PASSWORD RESET TOKENS (unchanged)
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // SESSIONS TABLE (staff sessions)
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignId('user_id')->nullable()
+                  ->constrained('users')
+                  ->nullOnDelete();
+
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
@@ -42,8 +60,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };
