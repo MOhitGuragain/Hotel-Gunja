@@ -4,23 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Room;
-use Carbon\Carbon;
 
 class RoomController extends Controller
 {
-    // List currently available rooms (date-aware)
-    public function index()
+    // List available rooms based on selected dates (REAL LOGIC)
+    public function index(Request $request)
     {
-        $now = Carbon::now();
+        $checkIn  = $request->check_in;
+        $checkOut = $request->check_out;
 
         $rooms = Room::with('category')
-            ->whereDoesntHave('bookings', function ($query) use ($now) {
-                $query->where('check_in', '<=', $now)
-                      ->where('check_out', '>=', $now);
+            ->when($checkIn && $checkOut, function ($query) use ($checkIn, $checkOut) {
+                $query->whereDoesntHave('bookings', function ($q) use ($checkIn, $checkOut) {
+                    $q->where('booking_status', 'approved')
+                      ->where(function ($overlap) use ($checkIn, $checkOut) {
+                          $overlap->whereBetween('check_in', [$checkIn, $checkOut])
+                                  ->orWhereBetween('check_out', [$checkIn, $checkOut])
+                                  ->orWhere(function ($full) use ($checkIn, $checkOut) {
+                                      $full->where('check_in', '<=', $checkIn)
+                                           ->where('check_out', '>=', $checkOut);
+                                  });
+                      });
+                });
             })
             ->get();
 
-        return view('rooms.index', compact('rooms'));
+        return view('rooms.index', compact('rooms', 'checkIn', 'checkOut'));
     }
 
     // Show single room details

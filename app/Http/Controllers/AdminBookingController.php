@@ -2,43 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Booking;
+use Illuminate\Http\Request;
 
 class AdminBookingController extends Controller
 {
-    // Show all bookings
+    // Show all bookings (ADMIN PANEL)
     public function index()
     {
-        // Eager load guest and bookable (polymorphic) relationships
-        $bookings = Booking::with(['guest', 'bookable'])->orderBy('created_at', 'desc')->get();
+        $bookings = Booking::with(['guest', 'bookable'])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('admin.bookings.index', compact('bookings'));
     }
 
-    // Approve a booking
+    // Approve booking
     public function approve($id)
     {
         $booking = Booking::findOrFail($id);
         $booking->booking_status = 'approved';
         $booking->save();
 
-        // Mark the room as booked for the period
-        if ($booking->bookable) {
-            $booking->bookable->status = 'booked';
-            $booking->bookable->save();
-        }
-
-        return redirect('/admin/bookings')->with('success', 'Booking approved.');
+        return redirect()->back()->with('success', 'Booking approved.');
     }
 
-    // Reject a booking
+    // Reject booking
     public function reject($id)
     {
         $booking = Booking::findOrFail($id);
         $booking->booking_status = 'rejected';
         $booking->save();
 
-        return redirect('/admin/bookings')->with('success', 'Booking rejected.');
+        return redirect()->back()->with('success', 'Booking rejected.');
     }
 }
