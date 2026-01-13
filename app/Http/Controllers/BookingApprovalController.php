@@ -13,7 +13,7 @@ class BookingApprovalController extends Controller
 
         $booking->update([
             'booking_status' => 'approved',
-            'approved_by' => auth()->id()
+            'approved_by' => auth()->$id()
         ]);
 
         return back()->with('success','Booking Approved');
