@@ -13,17 +13,15 @@ class AdminBookingController extends Controller
         $bookings = Booking::with(['guest', 'bookable'])
             ->orderBy('created_at', 'desc')
             ->get();
-
         return view('admin.bookings.index', compact('bookings'));
     }
 
     // Approve booking
     public function approve($id)
     {
-        $booking = Booking::findOrFail($id);
+        $booking = Booking::with('bookable')->findOrFail( $id);
         $booking->booking_status = 'approved';
         $booking->save();
-
         return redirect()->back()->with('success', 'Booking approved.');
     }
 
