@@ -10,6 +10,14 @@ use Carbon\Carbon;
 
 class GuestBookingController extends Controller
 {
+    // Show booking page
+    public function create($roomId)
+    {
+        $room = Room::findOrFail($roomId);
+
+        return view('rooms.book', compact('room'));
+    }
+
     // Store a new booking
     public function store(Request $request, $roomId)
     {
@@ -46,7 +54,7 @@ class GuestBookingController extends Controller
 
         // Handle guest: if not logged in, create a walk-in guest
         $guest = Guest::firstOrCreate(
-            ['name' => 'Walk-in Guest'],
+            ['name' => 'Guest'],
             ['email' => 'walkin@example.com', 'phone' => '0000000000']
         );
 

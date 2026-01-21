@@ -32,10 +32,37 @@ class RoomController extends Controller
         return view('rooms.index', compact('rooms', 'checkIn', 'checkOut'));
     }
 
-    // Show single room details
+    // Show  room details
     public function show($id)
-    {
-        $room = Room::with('category')->findOrFail($id);
-        return view('rooms.show', compact('room'));
-    }
+{
+    $rooms = [
+        1 => [
+            'name' => 'Presidential Suite',
+            'price' => '15000',
+            'img' => 'https://images.unsplash.com/photo-1591088398332-8a7791972843?w=1600',
+            'guests' => '4 Guests',
+            'size' => '1200 sq ft',
+            'description' => 'A lavish presidential suite offering unmatched comfort, elegance, and panoramic views.',
+            'amenities' => ['King Bed', 'Jacuzzi', 'Private Balcony', 'Mini Bar', 'Wi-Fi'],
+        ],
+        2 => [
+            'name' => 'Suite',
+            'price' => '8000',
+            'img' => 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1600',
+            'guests' => '3 Guests',
+            'size' => '800 sq ft',
+            'description' => 'Spacious suite designed for luxury stays with refined interiors.',
+            'amenities' => ['Queen Bed', 'City View', 'Wi-Fi', 'Mini Bar'],
+        ],
+    ];
+
+    abort_unless(isset($rooms[$id]), 404);
+
+    return view('rooms.show', [
+        'room' => $rooms[$id],
+    ]);
+}
+
+
+
 }
