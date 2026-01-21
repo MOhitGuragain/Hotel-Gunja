@@ -12,7 +12,6 @@ class AdminBookingController extends Controller
         $bookings = Booking::with(['guest', 'bookable'])
             ->orderBy('created_at', 'desc')
             ->get();
-
         return view('admin.bookings.index', compact('bookings'));
     }
 

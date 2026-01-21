@@ -1,0 +1,15 @@
+
+// To remove the old bookings with booking_status = 'approved
+//OPtion 1
+-->Step 1: Open Tinker
+php artisan tinker
+-->Step 2: Delete ALL approved bookings
+App\Models\Booking::where('booking_status', 'approved')->delete();
+
+✅ This deletes only approved bookings
+
+//Option 2:
+--->Delete from Database Directly (phpMyAdmin / MySQL)
+
+sql
+DELETE FROM bookings WHERE booking_status = 'approved';

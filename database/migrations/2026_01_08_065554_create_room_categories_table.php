@@ -15,9 +15,8 @@ Schema::create('room_categories', function (Blueprint $table) {
     $table->id();
     $table->string('name');
     $table->text('description')->nullable();
-    $table->decimal('base_price',10,2);
-    $table->integer('max_adults');
-    $table->integer('max_children')->default(0);
+    $table->integer('max_adults')->default(1);
+    $table->integer('max_children')->default(2);
     $table->timestamps();
 });
     }
