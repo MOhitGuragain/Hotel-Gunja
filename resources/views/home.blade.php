@@ -366,6 +366,172 @@
     </div>
 </section>
 
+{{-- ===== GUEST REVIEWS SECTION ===== --}}
+<section class="relative py-24 bg-gray-50 overflow-hidden">
+
+    <div class="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 to-transparent"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4">
+
+        {{-- Header --}}
+        <div class="text-center mb-16">
+            <p class="text-[#D4AF37] tracking-[0.3em] uppercase text-sm mb-4">
+                Testimonials
+            </p>
+
+            <h2 class="text-4xl md:text-5xl font-bold mb-6"
+                style="font-family:'Playfair Display', serif;">
+                What Our Guests Say
+            </h2>
+
+            <div class="w-24 h-1 bg-gradient-to-r from-[#800020] to-[#D4AF37] mx-auto mb-6"></div>
+
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Genuine experiences shared by guests who stayed with us.
+            </p>
+        </div>
+
+        {{-- Reviews Grid --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            @forelse($topReviews as $review)
+            <div class="group bg-white rounded-xl p-8
+                        border border-gray-200
+                        transition-all duration-500
+                        hover:-translate-y-3
+                        hover:shadow-[0_25px_50px_-15px_rgba(0,0,0,0.25)]
+                        hover:border-[#D4AF37]/40">
+
+                {{-- Stars --}}
+                <div class="flex mb-4">
+                    @for($i = 1; $i <= 5; $i++)
+                        <svg class="w-5 h-5 {{ $i <= $review->rating ? 'text-[#D4AF37]' : 'text-gray-300' }}"
+                             fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 0 0 .95.69h4.174c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 0 0-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.538 1.118l-3.381-2.455a1 1 0 0 0-1.176 0l-3.381 2.455c-.783.57-1.838-.197-1.538-1.118l1.287-3.966a1 1 0 0 0-.364-1.118L2.05 9.393c-.783-.57-.38-1.81.588-1.81h4.174a1 1 0 0 0 .95-.69l1.287-3.966z"/>
+                        </svg>
+                    @endfor
+                </div>
+
+                {{-- Review Text --}}
+                {{-- <p class="text-gray-600 italic mb-6 leading-relaxed max-h-24 overflow-y-auto "> //simple scroll bar--}} 
+                <p class="text-gray-600 italic mb-6 leading-relaxed max-h-24 overflow-y-auto scrollbar-hide review-scrollbar">
+                    “{{ $review->comment }}”
+                </p>
+
+                {{-- Guest Info --}}
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#800020] to-[#D4AF37]
+                                flex items-center justify-center text-white font-bold">
+                        {{ strtoupper(substr($review->name?? 'G',0,1)) }}
+                    </div>
+
+                    <div>
+                        <p class="font-semibold text-gray-900">
+                            {{ $review->name?? 'Verified Guest'}}
+                        </p>
+                        @if(!$review->name)
+                            <p class="text-sm text-gray-500">Verified Guest</p>
+                        @endif
+                    </div>
+                </div>
+
+            </div>
+            @empty
+                <p class="col-span-3 text-center text-gray-500">
+                    No reviews available yet.
+                </p>
+            @endforelse
+
+        </div>
+    </div>
+</section>
+
+
+
+{{-- Your Luxury Escape Awaits section  --}}
+<section class="relative overflow-hidden py-32 px-4">
+    <!-- Background Image -->
+    <div
+        class="absolute inset-0 bg-cover bg-center"
+        style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600');">
+        {{-- style="background-image: url('/Images/luxury_escape.jpg');" --}}
+    </div>
+
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#800020]/90 to-[#1a1a1a]/90"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-4xl mx-auto text-center text-white">
+        <!-- Sparkle Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="mx-auto mb-8 h-16 w-16 text-[#D4AF37] animate-pulse">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+            <path d="M20 3v4"/>
+            <path d="M22 5h-4"/>
+            <path d="M4 17v2"/>
+            <path d="M5 18H3"/>
+        </svg>
+
+        <!-- Heading -->
+        <h2 class="mb-8 text-5xl md:text-6xl font-bold"
+            style="font-family: 'Playfair Display', serif;">
+            Your Luxury Escape Awaits
+        </h2>
+
+        <!-- Subtitle -->
+        <p class="mb-12 text-2xl text-gray-200"
+           style="font-family: 'Cormorant Garamond', serif;">
+            Experience the perfect blend of elegance, comfort, and exceptional service
+        </p>
+
+        <!-- CTA Button -->
+        <a href="/rooms">
+            <button
+                class="group inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r
+                       from-[#D4AF37] to-[#F4E4C1] px-12 py-8 text-xl font-semibold text-[#1a1a1a]
+                       shadow-2xl transition-all duration-300
+                       hover:from-[#F4E4C1] hover:to-[#D4AF37]
+                       hover:scale-105 active:scale-95">
+
+                <!-- Calendar Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="mr-3 h-6 w-6">
+                    <path d="M8 2v4"/>
+                    <path d="M16 2v4"/>
+                    <rect width="18" height="18" x="3" y="4" rx="2"/>
+                    <path d="M3 10h18"/>
+                </svg>
+
+                Book Now
+
+                <!-- Arrow Animation -->
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="ml-3 h-6 w-6 transition-transform duration-300 group-hover:translate-x-2">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                </svg>
+            </button>
+        </a>
+    </div>
+</section>
 
 
 
