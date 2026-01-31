@@ -35,6 +35,38 @@
             background: #D4AF37;
             color: #1a1a1a;
         }
+
+        /* Hide scrollbar by default */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;      /* Firefox */
+}
+
+/* Show golden scrollbar on hover */
+.review-scrollbar:hover::-webkit-scrollbar {
+    display: block;
+    width: 6px; /* width of scrollbar */
+}
+
+.review-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: #D4AF37; /* gold color */
+    border-radius: 10px;
+}
+
+.review-scrollbar:hover::-webkit-scrollbar-track {
+    background: rgba(212, 175, 55, 0.1); /* light gold track */
+}
+
+/* Firefox */
+.review-scrollbar:hover {
+    scrollbar-width: thin;
+    scrollbar-color: #c2a134 rgba(212, 175, 55, 0.1);
+}
+
+        
     </style>
 </head>
 
