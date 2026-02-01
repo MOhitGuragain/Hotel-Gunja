@@ -38,21 +38,14 @@ Route::get('/360-tour', function () {
 });
 
 
-// Admin: approve or reject reviews
-Route::prefix('admin')->group(function () {
+// Book a room
+// Show booking page
+Route::get('/rooms/{category}/book', [GuestBookingController::class, 'create'])
+    ->name('rooms.book');
 
-
-    // Admin: list all bookings
-    Route::get('/bookings', [AdminBookingController::class, 'index'])
-        ->name('admin.bookings.index');
-
-    // Admin: approve or reject a booking
-    Route::post('/bookings/{id}/approve', [AdminBookingController::class, 'approve'])
-        ->name('admin.bookings.approve');
-
-    Route::post('/bookings/{id}/reject', [AdminBookingController::class, 'reject'])
-        ->name('admin.bookings.reject');
-
+// Store booking
+Route::post('/rooms/{category}/book', [GuestBookingController::class, 'store'])
+    ->name('rooms.book.store');
 
     // Reviews list
     Route::get('/reviews', [ReviewController::class, 'index'])

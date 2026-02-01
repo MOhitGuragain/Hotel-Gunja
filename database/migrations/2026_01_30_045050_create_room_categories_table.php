@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('room_plans', function (Blueprint $table) {
+        Schema::create('room_categories', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('room_category_id')->constrained();
-    $table->string('plan_name');
-    $table->decimal('price_per_night',10,2);
-    $table->decimal('extra_bed_price',10,2)->default(0);
+    $table->string('name')->unique();
+    $table->text('description')->nullable();
+    $table->integer('max_adults')->default(1);
+    $table->integer('max_children')->default(2);
     $table->timestamps();
-});
-
+        });
     }
 
     /**
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('room_plans');
+        Schema::dropIfExists('room_categories');
     }
 };
