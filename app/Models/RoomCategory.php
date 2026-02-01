@@ -13,7 +13,10 @@ class RoomCategory extends Model
         'max_adults',
         'max_children'
     ];
-
+public function plans()
+    {
+        return $this->hasMany(RoomPlan::class, 'room_category_id');
+    }
     public function rooms()
     {
         return $this->hasMany(Room::class, 'room_category_id');

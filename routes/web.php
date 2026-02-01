@@ -26,11 +26,11 @@ Route::get('/360-tour', function () {
 
 // Book a room
 // Show booking page
-Route::get('/rooms/{id}/book', [GuestBookingController::class, 'create'])
+Route::get('/rooms/{category}/book', [GuestBookingController::class, 'create'])
     ->name('rooms.book');
 
 // Store booking
-Route::post('/rooms/{id}/book', [GuestBookingController::class, 'store'])
+Route::post('/rooms/{category}/book', [GuestBookingController::class, 'store'])
     ->name('rooms.book.store');
 
 // Admin: list all bookings

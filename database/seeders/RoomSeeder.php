@@ -10,31 +10,18 @@ class RoomSeeder extends Seeder
 {
     public function run(): void
     {
-        $distribution = [
-            'Presidential Suite' => 2,
-            'Suite' => 4,
-            'Super Deluxe' => 6,
-            'Deluxe' => 8,
-            'Family' => 6,
-            'Standard' => 6,
-            'Twin Bed Super Deluxe' => 2,
-            'Twin Bed Deluxe' => 2,
-            'Twin Bed Standard' => 2,
-        ];
+        $rooms = [];
 
-        $roomNumber = 101;
-
-        foreach ($distribution as $categoryName => $count) {
-            $category = RoomCategory::where('name', $categoryName)->first();
-
-            for ($i = 0; $i < $count; $i++) {
-                Room::create([
-                    'room_number' => $roomNumber++,
-                    'room_category_id' => $category->id,
-                    'status' => 'available',
-                ]);
-            }
+        for ($i = 1; $i <= 38; $i++) {
+            $rooms[] = [
+                'room_number' => 'R' . str_pad($i, 3, '0', STR_PAD_LEFT),
+                'room_category_id' => ($i % 9) + 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
         }
+
+        Room::insert($rooms);
     }
 }
 
