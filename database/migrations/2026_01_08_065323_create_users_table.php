@@ -24,6 +24,7 @@ return new class extends Migration
 
             // Role relationship
             $table->foreignId('role_id')
+                 ->default(4) // Default to 'Guest' role
                   ->constrained('roles')
                   ->cascadeOnDelete();
 
