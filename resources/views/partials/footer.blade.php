@@ -34,7 +34,12 @@ of the city.
                 <div class="flex space-x-4">
 
                 <!-- Facebook -->
-                <a href="#" class="social-btn" aria-label="Facebook">
+                    <a href="https://www.facebook.com/hotelgunja"
+                        class="social-btn"
+                        aria-label="Facebook"
+                        target="_blank"
+                        rel="noopener noreferrer">
+
                     <svg viewBox="0 0 24 24" class="icon">
                         <path fill="currentColor"
                             d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07c0 5.02 3.66 9.19 8.44 9.93v-7.02H8.08v-2.9h2.29V9.41c0-2.27 1.35-3.52 3.42-3.52.99 0 2.03.18 2.03.18v2.23h-1.14c-1.12 0-1.47.69-1.47 1.4v1.68h2.5l-.4 2.9h-2.1v7.02C18.34 21.26 22 17.09 22 12.07z"/>
@@ -43,14 +48,24 @@ of the city.
 
 
                 <!-- Instagram -->
-                <a href="#" class="social-btn" aria-label="Instagram">
+                <a href="https://www.instagram.com/hotelgunja"
+                    class="social-btn"
+                    aria-label="Instagram"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
                     <svg viewBox="0 0 24 24" class="icon" fill="currentColor">
                         <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm0 7.4A2.9 2.9 0 1 1 14.9 12 2.9 2.9 0 0 1 12 14.9zm4.7-7.9a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1z"/>
                     </svg>
                 </a>
 
                 <!-- YouTube -->
-                <a href="#" class="social-btn" aria-label="YouTube">
+                <a href="https://www.youtube.com/@hotelgunja"
+                    class="social-btn"
+                    aria-label="YouTube"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
                     <svg viewBox="0 0 24 24" class="icon">
                         <!-- Background -->
                         <path fill="currentColor"
@@ -64,7 +79,11 @@ of the city.
 
 
                 <!-- TikTok -->
-                <a href="#" class="social-btn" aria-label="TikTok">
+                <a href="https://www.tiktok.com/@hotelgunja"
+                    class="social-btn"
+                    aria-label="TikTok"
+                    target="_blank"
+                    rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24" class="icon" fill="currentColor">
                         <path d="M21 8.5a6.5 6.5 0 0 1-4-1.3v6.6a5.5 5.5 0 1 1-5-5.5v3a2.5 2.5 0 1 0 2 2.4V2h3a6.5 6.5 0 0 0 4 3.5v3z"/>
                     </svg>

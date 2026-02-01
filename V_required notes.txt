@@ -13,3 +13,9 @@ App\Models\Booking::where('booking_status', 'approved')->delete();
 
 sql
 DELETE FROM bookings WHERE booking_status = 'approved';
+
+
+//Clear Laravel view cache:
+
+php artisan view:clear
+php artisan cache:clear

@@ -33,21 +33,23 @@
         <div class="flex justify-between items-center h-20">
 
             {{-- Logo --}}
-            <a href="{{ url('/') }}" class="flex items-center space-x-3 group">
-                <div class="bg-gradient-to-br from-[#800020] to-[#600018] p-2.5 rounded-xl
-                            group-hover:scale-110 transition-all duration-500 shadow-lg relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#D4AF37] to-transparent
-                                opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
+            <a href="{{ url('/') }}" class="flex items-center space-x-3 group focus:outline-none focus:ring-0 active:scale-100 select-none">
+                <div class="bg-gradient-to-br from-[#800020] to-[#600018]
+                            w-12 h-12 p-2.5 rounded-xl shadow-lg
+                            relative overflow-hidden transition-transform duration-500
+                group-hover:scale-110">
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-7 w-7 text-white relative z-10"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <rect x="4" y="2" width="16" height="20" rx="2"/>
-                        <path d="M12 7h.01M12 11h.01M8 7h.01M8 11h.01M16 7h.01M16 11h.01"/>
-                        <path d="M10 22v-6.57M14 22v-6.57"/>
-                        <path d="M15 16a5 5 0 0 0-6 0"/>
-                    </svg>
+                    <!-- Hover overlay glow  -->
+                    {{-- <div class="absolute inset-0 bg-gradient-to-br from-[#D4AF37] to-transparent
+                                opacity-0 group-hover:opacity-30 transition-opacity duration-500 z-10"></div> --}}
+
+                    <!-- Logo Image (Scaled Up) -->
+                    <img src="{{ asset('Images/logo.jpg') }}"
+                        alt="Logo"
+                        class="w-full h-full object-cover rounded-lg
+                                scale-[1.70] origin-center ">
                 </div>
+
 
                 <div>
                     <span class="text-2xl font-bold bg-gradient-to-r from-[#800020] to-[#D4AF37]
@@ -101,13 +103,20 @@
                                 group-hover:w-full group-hover:left-0 "></span>
                 </a>
 
-                <a href="{{ route('rooms.book', $featuredRoom->id) }}" class="{{ $navItem }} navbar-link group relative"
-                class="{{ $navItem }} navbar-link">
+
+                {{-- Book Now  --}}
+                @if(!empty($featuredRoom))
+                    <a href="{{ route('rooms.book', $featuredRoom->id) }}"
+                    class="{{ $navItem }} navbar-link group relative">
                     Book Now
-                    <span class="absolute bottom-0  h-0.5
-                                bg-gradient-to-r from-[#800020] to-[#D4AF37]
-                                group-hover:w-full group-hover:left-0 "></span>
-                </a>
+                    </a>
+                @else
+                    <a href="{{ route('rooms.index') }}"
+                    class="{{ $navItem }} navbar-link group relative">
+                    Book Now
+                    </a>
+                @endif
+
             </nav>
 
             {{-- Mobile Button --}}
@@ -146,10 +155,21 @@
             360 Image Tour
         </a>
 
-        <a href="{{ url('/#booknow') }}"
-            class="block px-6 py-4 {{ request()->is('rooms*') ? 'text-[#800020] font-semibold' : '' }}">
-            Book Now
-        </a>
+        {{-- Book Now --}}
+        @if(!empty($featuredRoom))
+            <a href="{{ route('rooms.book', $featuredRoom->id) }}"
+            class="block px-6 py-4 {{ request()->is('rooms/*/book') ? 'text-[#800020] font-semibold' : '' }}">
+                Book Now
+            </a>
+        @else
+            <a href="{{ route('rooms.index') }}"
+            class="block px-6 py-4 {{ request()->is('rooms') ? 'text-[#800020] font-semibold' : '' }}">
+                Book Now
+            </a>
+        @endif
+
+
+
     </div>
 
 <script>
