@@ -74,5 +74,4 @@ Route::post('/rooms/{category}/book', [GuestBookingController::class, 'store'])
     Route::post('/reviews/{id}/restore', [ReviewController::class, 'restore'])
     ->name('admin.reviews.restore');
 
-});
 
