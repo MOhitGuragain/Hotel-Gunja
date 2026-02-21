@@ -23,33 +23,46 @@ class GuestBookingController extends Controller
     /**
      * Store booking
      */
-    public function store(Request $request, $categoryId)
-    {
-        $category = RoomCategory::findOrFail($categoryId);
+  public function store(Request $request, $categoryId)
+{
+    $category = RoomCategory::findOrFail($categoryId);
 
-        $request->validate([
-            'room_plan_id' => 'required|exists:room_plans,id',
-            'check_in'     => 'required|date|after_or_equal:today',
-            'check_out'    => 'required|date|after:check_in',
-            'guests'       => 'required|integer|min:1|max:' . $category->max_adults,
-        ]);
+    $request->validate([
+        'room_plan_id'  => 'required|exists:room_plans,id',
+        'check_in'      => 'required|date|after_or_equal:today',
+        'check_out'     => 'required|date|after:check_in',
+        'guests'        => 'required|integer|min:1|max:' . $category->max_adults,
+        'guest_name'    => 'required|string|max:255',
+        'contact_number'=> 'required|string|max:20',
+        'id_image'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
 
-        $guest = Guest::firstOrCreate(
-            ['email' => 'walkin@example.com'],
-            ['name' => 'Walk-in Guest', 'phone' => '0000000000']
-        );
+    // Store image
+    $imagePath = null;
 
-        Booking::create([
-            'guest_id'      => $guest->id,
-            'bookable_type' => RoomCategory::class,
-            'bookable_id'   => $category->id,
-            'room_plan_id'  => $request->room_plan_id,
-            'check_in'      => $request->check_in,
-            'check_out'     => $request->check_out,
-            'guests'        => $request->guests,
-            'booking_status'=> 'pending',
-        ]);
-
-        return back()->with('success', 'Booking submitted! Waiting for approval.');
+    if ($request->hasFile('id_image')) {
+        $imagePath = $request->file('id_image')->store('id_images', 'public');
     }
+
+    $guest = Guest::firstOrCreate(
+        ['email' => 'walkin@example.com'],
+        ['name' => 'Walk-in Guest', 'phone' => '0000000000']
+    );
+
+    Booking::create([
+        'guest_id'      => $guest->id,
+        'bookable_type' => RoomCategory::class,
+        'bookable_id'   => $category->id,
+        'room_plan_id'  => $request->room_plan_id,
+        'check_in'      => $request->check_in,
+        'check_out'     => $request->check_out,
+        'guests'        => $request->guests,
+        'booking_status'=> 'pending',
+        'guest_name'    => $request->guest_name,
+        'contact_number'=> $request->contact_number,
+        'id_image'      => $imagePath,
+    ]);
+
+    return back()->with('success', 'Booking submitted! Waiting for approval.');
+}
 }
