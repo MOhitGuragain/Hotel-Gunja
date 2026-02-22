@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use App\Models\Room;
+use App\Models\Event;
 
 class HomeController extends Controller
 {
@@ -20,6 +21,13 @@ class HomeController extends Controller
         // Get a featured room 
         $featuredRoom = Room::first();
 
-        return view('home', compact('topReviews', 'featuredRoom'));
+        
+        //upcoming events
+        $events = Event::where('event_date', '>=', now())
+        ->orderBy('event_date')
+        ->take(3)
+        ->get();
+        
+        return view('home', compact('topReviews', 'featuredRoom' , 'events'));
     }
 }
