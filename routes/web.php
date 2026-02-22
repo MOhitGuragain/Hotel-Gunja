@@ -6,6 +6,7 @@ use App\Http\Controllers\GuestBookingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\EventController;
 
 // Home page → hero section
 // Route::get('/', function () {
@@ -74,5 +75,19 @@ Route::post('/rooms/{category}/book', [GuestBookingController::class, 'store'])
     Route::post('/reviews/{id}/restore', [ReviewController::class, 'restore'])
     ->name('admin.reviews.restore');
 
-});
 
+//Upcoming event
+Route::prefix('admin')->group(function () {
+
+    Route::get('/events', [EventController::class, 'index'])
+        ->name('admin.events.index');
+
+    Route::get('/events/create', [EventController::class, 'create'])
+        ->name('admin.events.create');
+
+    Route::post('/events/store', [EventController::class, 'store'])
+        ->name('admin.events.store');
+
+    Route::delete('/events/{id}', [EventController::class, 'destroy'])
+        ->name('admin.events.destroy');
+});
