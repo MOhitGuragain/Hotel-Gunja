@@ -6,6 +6,7 @@ use App\Http\Controllers\GuestBookingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\RestaurantController;
 
 // Home page → hero section
 // Route::get('/', function () {
@@ -73,5 +74,17 @@ Route::post('/rooms/{category}/book', [GuestBookingController::class, 'store'])
     // add restore route 
     Route::post('/reviews/{id}/restore', [ReviewController::class, 'restore'])
     ->name('admin.reviews.restore');
+
+Route::get('/restaurants', [RestaurantController::class, 'index'])
+    ->name('restaurant.index');
+
+Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])
+    ->name('restaurant.show');
+
+Route::get('/restaurants/{id}/book', [RestaurantController::class, 'create'])
+    ->name('restaurant.book');
+
+Route::post('/restaurants/{id}/book', [RestaurantController::class, 'store'])
+    ->name('restaurant.book.store');
 
 
