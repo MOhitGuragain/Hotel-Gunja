@@ -6,15 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    protected $fillable = [
-        'guest_id',
-        'bookable_id',
-        'bookable_type',
-        'check_in',
-        'check_out',
-        'guests',
-        'booking_status'
-    ];
+   protected $fillable = [
+    'guest_id',
+    'guest_name',
+    'contact_number',
+    'id_image',
+    'bookable_type',
+    'bookable_id',
+    'check_in',
+    'check_out',
+    'guests',
+    'booking_status',
+    'approved_by',
+    'total_price',
+];
 
     public function guest()
     {
