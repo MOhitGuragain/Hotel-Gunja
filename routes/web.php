@@ -32,6 +32,10 @@ Route::get('/360-tour', function () {
     return view('pages.360tour');
 });
 
+// Admin: list all bookings
+Route::get('/admin/bookings', [AdminBookingController::class, 'index'])
+    ->name('admin.bookings.index');
+
 // Reviews
 Route::get('/reviews', [ReviewController::class, 'index'])
     ->name('admin.reviews.index');
