@@ -366,6 +366,158 @@
     </div>
 </section>
 
+
+{{-- ===== UPCOMING EVENTS SECTION ===== --}}
+<section class="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
+
+    <div class="max-w-7xl mx-auto">
+
+        {{-- Header --}}
+        <div class="text-center mb-16">
+            <p class="text-[#D4AF37] tracking-[0.3em] text-sm uppercase mb-4">
+                Events
+            </p>
+
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+                style="font-family: 'Playfair Display', serif;">
+                Upcoming Events
+            </h2>
+
+            <div class="w-24 h-1 bg-gradient-to-r from-[#800020] to-[#D4AF37] mx-auto mb-6"></div>
+
+            {{-- <p class="text-lg text-gray-600 max-w-2xl mx-auto"
+               style="font-family: 'Cormorant Garamond', serif;">
+                Discover special events and experiences happening at our hotel.
+            </p> --}}
+        </div>
+
+        {{-- Events Grid --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            @forelse($events as $event)
+            <div class="group bg-white rounded-xl overflow-hidden
+                        border border-gray-200
+                        transition-all duration-500
+                        hover:-translate-y-3
+                        hover:shadow-[0_25px_50px_-15px_rgba(212,175,55,0.25)]
+                        hover:border-[#D4AF37]/40">
+
+                {{-- Image (optional placeholder) --}}
+                {{-- <div class="relative h-56 bg-gray-200">
+                    <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800"
+                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent"></div>
+
+                    {{-- Date Badge --}}
+                    {{-- <div class="absolute top-4 right-4 bg-[#D4AF37] px-4 py-2 font-bold text-black">
+                        {{ \Carbon\Carbon::parse($event->event_date)->format('M d') }}
+                    </div>
+                </div> --}} 
+
+                {{-- Content --}}
+                <div class="p-6 " >
+
+                    <h3 class="text-2xl font-semibold mb-2"
+                        style="font-family:'Playfair Display', serif;">
+                        {{ $event->title }}
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mb-2">
+                        📍 {{ $event->location ?? 'Hotel Gunja' }}
+                    </p>
+
+                    <p class="text-gray-600 mb-4 max-h-20 overflow-hidden">
+                        {{ $event->description }}
+                    </p>
+
+                    <p class="text-[#D4AF37] font-semibold">
+                        {{ \Carbon\Carbon::parse($event->event_date)->format('F d, Y') }}
+                    </p>
+
+                </div>
+            </div>
+
+            @empty
+
+            {{-- Empty Message --}}
+            <div class="col-span-3 text-center py-12">
+                <p class="text-gray-500 text-lg">
+                    No upcoming events available.
+                </p>
+            </div>
+
+            @endforelse
+
+        </div>
+    </div>
+</section>
+
+{{-- RESTURANTS & DINING --}}
+<section class="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
+
+    <div class="max-w-7xl mx-auto">
+
+        {{-- Header --}}
+        <div class="text-center mb-16">
+            <p class="text-[#D4AF37] tracking-[0.3em] text-sm uppercase mb-4">
+                Experience
+            </p>
+
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+                style="font-family: 'Playfair Display', serif;">
+                Restaurant & Dining
+            </h2>
+
+            <div class="w-24 h-1 bg-gradient-to-r from-[#800020] to-[#D4AF37] mx-auto mb-6"></div>
+        </div>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+            @foreach($restaurants as $restaurant)
+            <div class="rounded-xl shadow overflow-hidden border-2 border-transparent hover:border-[#D4AF37]/30 flex flex-col">
+
+                {{-- Image --}}
+                <div class="relative h-64 overflow-hidden group">
+                    <img src="{{ asset('storage/' . $restaurant->image) }}"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+
+                {{-- Content --}}
+                <div class="p-6 flex flex-col flex-grow">
+
+                    <h3 class="text-xl font-bold mb-3">
+                        {{ $restaurant->name }}
+                    </h3>
+
+                    <p class="text-gray-600 mb-4">
+                        {{ Str::limit($restaurant->description, 120) }}
+                    </p>
+
+                    <ul class="text-sm text-gray-600 space-y-1 mb-5">
+                        <li>Opening: {{ $restaurant->opening_time ?? '7:00 AM' }}</li>
+                        <li>Closing: {{ $restaurant->closing_time ?? '11:00 PM' }}</li>
+
+                        @if($restaurant->features)
+                            <li>{{ $restaurant->features }}</li>
+                        @endif
+                    </ul>
+
+                    <a href="{{ route('restaurant.show', $restaurant->id) }}"
+                       class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
+                        Book Your Table
+                    </a>
+
+                </div>
+            </div>
+            @endforeach
+
+        </div>
+
+    </div>
+
+</section>
 {{-- ===== GUEST REVIEWS SECTION ===== --}}
 <section class="relative py-24 bg-gray-50 overflow-hidden">
 
