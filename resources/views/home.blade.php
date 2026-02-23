@@ -503,6 +503,9 @@
                             <li>{{ $restaurant->features }}</li>
                         @endif
                     </ul>
+                    <p class ="text-sm text-gray-500 mb-4">
+                        {{ $restaurant->location  }}
+                    </p>
 
                     <a href="{{ route('restaurant.show', $restaurant->id) }}"
                        class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
@@ -573,6 +576,11 @@
 
                     <p class="text-gray-600 mb-4 max-h-20 overflow-hidden">
                         {{ Str::limit($hall->description, 100) }}
+
+                        <a href="{{ route('event-halls.show', $hall->id) }}"
+                       class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
+                        Book Now
+                    </a>
                 </div>
             </div>
             @endforeach

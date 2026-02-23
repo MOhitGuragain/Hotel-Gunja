@@ -44,7 +44,7 @@
 
         <p class="text-lg text-gray-700 leading-relaxed mb-8"
            style="font-family:'Cormorant Garamond', serif;">
-            {{ $category->description ?? 'Luxury accommodation with premium comfort and modern amenities.' }}
+            {{ $category->description }}
         </p>
 
         {{-- INFO --}}

@@ -70,6 +70,9 @@ Route::post('/restaurants/{id}/book', [RestaurantController::class, 'store'])
 
 // Events
 Route::prefix('admin')->group(function () {
+    
+Route::get('/bookings', [AdminBookingController::class, 'index'])
+        ->name('admin.bookings.index');
 
     Route::get('/events', [EventController::class, 'index'])
         ->name('admin.events.index');
@@ -93,4 +96,19 @@ Route::prefix('event-halls')->group(function () {
 
     Route::post('/{id}/book', [EventHallController::class, 'store'])->name('event-halls.store');
 });
+use App\Http\Controllers\StaffLoginController;
 
+Route::prefix('staff')->group(function () {
+    Route::get('/login', [StaffLoginController::class, 'showLoginForm'])->name('auth.staff-login');
+    Route::post('/login', [StaffLoginController::class, 'login'])->name('auth.staff-login.submit');
+    Route::post('/logout', [StaffLoginController::class, 'logout'])->name('auth.staff-logout');
+});
+
+use App\Http\Controllers\DashboardController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/admin', [DashboardController::class, 'admin'])->name('dashboard.admin');
+    Route::get('/dashboard/receptionist', [DashboardController::class, 'receptionist'])->name('dashboard.receptionist');
+    Route::get('/dashboard/cashier', [DashboardController::class, 'cashier'])->name('dashboard.cashier');
+});
