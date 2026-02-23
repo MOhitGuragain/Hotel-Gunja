@@ -37,7 +37,7 @@
                         call us
                     </label>
                     <span class="text-sm">
-                        +977-044-550620, 9800000000
+                        +977-044-550620, 044550620
                     </span>
                 </div>
 
@@ -515,6 +515,68 @@
 
         </div>
 
+    </div>
+
+</section>
+{{-- - Event Halls Section --}}
+<sectiion class="relative py-24 bg-gray-50 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#D4AF37]/5 to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <p class="text-[#D4AF37] tracking-[0.3em] uppercase text-sm mb-4">
+                Celebrate with us in our Authentic
+            </p>
+
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+                style="font-family: 'Playfair Display', serif;">
+                Event Halls
+            </h2>
+
+            <div class="w-24 h-1 bg-gradient-to-r from-[#800020] to-[#D4AF37] mx-auto mb-6"></div>
+
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Host your special occasions in our elegant event halls.
+            </p>
+        </div>
+
+        {{-- Event Halls Grid --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            @foreach($eventHalls as $hall)
+            <div class="group bg-white rounded-xl overflow-hidden
+                        border border-gray-200
+                        transition-all duration-500
+                        hover:-translate-y-3
+                        hover:shadow-[0_25px_50px_-15px_rgba(212,175,55,0.25)]
+                        hover:border-[#D4AF37]/40">
+
+                {{-- Image --}}
+                <div class="relative h-56 overflow-hidden group">
+                    <img src="{{ asset('storage/' . $hall->image) }}"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent"></div>
+
+                    {{-- Capacity Badge --}}
+                    <div class="absolute top-4 right-4 bg-[#D4AF37] px-4 py-2 font-bold text-black">
+                        {{ $hall->max_capacity }} Guests
+                    </div>
+                </div>
+
+                {{-- Content --}}
+                <div class="p-6 " >
+
+                    <h3 class="text-2xl font-semibold mb-2"
+                        style="font-family:'Playfair Display', serif;">
+                        {{ $hall->name }}
+                    </h3>
+
+                    <p class="text-gray-600 mb-4 max-h-20 overflow-hidden">
+                        {{ Str::limit($hall->description, 100) }}
+                </div>
+            </div>
+            @endforeach
+        </div>
     </div>
 
 </section>

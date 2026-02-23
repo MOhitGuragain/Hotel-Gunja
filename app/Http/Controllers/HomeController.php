@@ -6,6 +6,7 @@ use App\Models\Review;
 use App\Models\Room;
 use App\Models\Event;
 use App\Models\Restaurant;
+use App\Models\EventHall;
 
 class HomeController extends Controller
 {
@@ -30,12 +31,14 @@ class HomeController extends Controller
 
     // Restaurants
     $restaurants = Restaurant::latest()->take(4)->get();
-
+$eventHalls = EventHall::latest()->take(4)->get();
     return view('home', compact(
         'topReviews',
         'featuredRoom',
         'events',
-        'restaurants'
+        'restaurants',
+        'eventHalls'
     ));
+  
 }
 }
