@@ -475,124 +475,43 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-            <!-- Card 1 -->
+            @foreach($restaurants as $restaurant)
             <div class="rounded-xl shadow overflow-hidden border-2 border-transparent hover:border-[#D4AF37]/30 flex flex-col">
+
+                {{-- Image --}}
                 <div class="relative h-64 overflow-hidden group">
-                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800"
+                    <img src="{{ asset('storage/' . $restaurant->image) }}"
                          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                 </div>
 
+                {{-- Content --}}
                 <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold mb-3">Fine Dining Restaurant</h3>
+
+                    <h3 class="text-xl font-bold mb-3">
+                        {{ $restaurant->name }}
+                    </h3>
 
                     <p class="text-gray-600 mb-4">
-                        Savor world-class cuisine prepared by expert chefs.
-                        Enjoy local delicacies and international dishes in a luxury setting.
+                        {{ Str::limit($restaurant->description, 120) }}
                     </p>
 
                     <ul class="text-sm text-gray-600 space-y-1 mb-5">
-                        <li>Breakfast: 7:00 AM – 10:30 AM</li>
-                        <li>Lunch: 12:00 PM – 3:00 PM</li>
-                        <li>Dinner: 7:00 PM – 11:00 PM</li>
-                        <li>In-Room Dining Available</li>
+                        <li>Opening: {{ $restaurant->opening_time ?? '7:00 AM' }}</li>
+                        <li>Closing: {{ $restaurant->closing_time ?? '11:00 PM' }}</li>
+
+                        @if($restaurant->features)
+                            <li>{{ $restaurant->features }}</li>
+                        @endif
                     </ul>
 
-                    <a href="#"
+                    <a href="{{ route('restaurant.show', $restaurant->id) }}"
                        class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
-                        Book Now
+                        Book Your Table
                     </a>
+
                 </div>
             </div>
-
-
-            <!-- Card 2 -->
-            <div class="rounded-xl shadow overflow-hidden border-2 border-transparent hover:border-[#D4AF37]/30 flex flex-col">
-                <div class="relative h-64 overflow-hidden group">
-                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800"
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                </div>
-
-                <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold mb-3">Dining Hall</h3>
-
-                    <p class="text-gray-600 mb-4">
-                        Spacious dining hall perfect for families and groups.
-                        Enjoy a relaxed atmosphere and delicious meals.
-                    </p>
-
-                    <ul class="text-sm text-gray-600 space-y-1 mb-5">
-                        <li>Breakfast: 7:00 AM – 10:30 AM</li>
-                        <li>Lunch: 12:00 PM – 3:00 PM</li>
-                        <li>Dinner: 6:30 PM – 10:30 PM</li>
-                        <li>Group Seating Available</li>
-                    </ul>
-
-                    <a href="#"
-                       class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
-                        Book Now
-                    </a>
-                </div>
-            </div>
-
-
-            <!-- Card 3 -->
-            <div class="rounded-xl shadow overflow-hidden border-2 border-transparent hover:border-[#D4AF37]/30 flex flex-col">
-                <div class="relative h-64 overflow-hidden group">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800"
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                </div>
-
-                <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold mb-3">Private Dining</h3>
-
-                    <p class="text-gray-600 mb-4">
-                        Exclusive private dining rooms for celebrations
-                        and special occasions with personalized service.
-                    </p>
-
-                    <ul class="text-sm text-gray-600 space-y-1 mb-5">
-                        <li>Private Rooms Available</li>
-                        <li>Advance Booking Required</li>
-                        <li>Custom Menu Options</li>
-                        <li>VIP Service Available</li>
-                    </ul>
-
-                    <a href="#"
-                       class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
-                        Book Now
-                    </a>
-                </div>
-            </div>
-
-
-            <!-- Card 4 -->
-            <div class="rounded-xl shadow overflow-hidden border-2 border-transparent hover:border-[#D4AF37]/30 flex flex-col">
-                <div class="relative h-64 overflow-hidden group">
-                    <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800"
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                </div>
-
-                <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold mb-3">Bar & Lounge</h3>
-
-                    <p class="text-gray-600 mb-4">
-                        Relax and unwind with premium drinks
-                        in a cozy and stylish environment.
-                    </p>
-
-                    <ul class="text-sm text-gray-600 space-y-1 mb-5">
-                        <li>Signature Cocktails</li>
-                        <li>Premium Spirits</li>
-                        <li>Live Music Weekends</li>
-                        <li>Happy Hour: 5 PM – 7 PM</li>
-                    </ul>
-
-                    <a href="#"
-                       class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
-                        Book Now
-                    </a>
-                </div>
-            </div>
+            @endforeach
 
         </div>
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\EventHallController;
 
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -86,3 +87,14 @@ Route::prefix('admin')->group(function () {
     Route::delete('/events/{id}', [EventController::class, 'destroy'])
         ->name('admin.events.destroy');
 });
+Route::prefix('event-halls')->group(function () {
+
+    Route::get('/', [EventHallController::class, 'index'])->name('event-halls.index');
+
+    Route::get('/{id}', [EventHallController::class, 'show'])->name('event-halls.show');
+
+    Route::get('/{id}/book', [EventHallController::class, 'create'])->name('event-halls.book');
+
+    Route::post('/{id}/book', [EventHallController::class, 'store'])->name('event-halls.store');
+});
+
