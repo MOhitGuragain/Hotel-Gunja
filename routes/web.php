@@ -24,6 +24,8 @@ Route::middleware(['auth', 'role:Admin,Receptionist'])
 
         Route::post('/bookings/{booking}/approve', [AdminBookingController::class, 'approve'])
             ->name('bookings.approve');
+        Route::post('/bookings/{booking}/reject', [AdminBookingController::class, 'reject'])
+            ->name('bookings.reject');
 });
 Route::middleware(['auth', 'role:Admin'])
     ->prefix('admin')

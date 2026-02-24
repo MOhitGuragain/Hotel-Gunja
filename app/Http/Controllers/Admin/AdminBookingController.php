@@ -4,15 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Room;
 
 class AdminBookingController extends Controller
 {
     // List all bookings
     public function index()
     {
-        $bookings = Booking::with(['guest', 'bookable'])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $bookings = Booking::with([
+            'guest',
+            'bookable',
+            'room',
+            'approvedBy'
+        ])
+        ->latest()
+        ->get();
+
         return view('admin.bookings.index', compact('bookings'));
     }
 
@@ -21,32 +28,54 @@ class AdminBookingController extends Controller
     {
         $booking = Booking::with('bookable')->findOrFail($id);
 
-        $booking->booking_status = 'approved';
-        $booking->save();
-
-        // Update room status
-        if ($booking->bookable) {
-            $booking->bookable->status = 'booked';
-            $booking->bookable->save();
+        // If already approved, stop
+        if ($booking->booking_status === 'approved') {
+            return back()->with('error', 'Booking already approved.');
         }
 
-        return redirect()->back()->with('success', 'Booking approved.');
+        // Only assign room if booking is RoomCategory
+        if ($booking->bookable_type === 'App\Models\RoomCategory') {
+
+            $room = Room::where('room_category_id', $booking->bookable_id)
+                        ->where('status', 'available')
+                        ->first();
+
+            if (!$room) {
+                return back()->with('error', 'No available rooms in this category.');
+            }
+
+            // Assign room
+            $booking->room_id = $room->id;
+
+            // Mark room occupied
+            $room->status = 'booked';
+            $room->save();
+        }
+
+        $booking->booking_status = 'approved';
+        $booking->approved_by = auth()->id();
+        $booking->save();
+
+        return back()->with('success', 'Booking approved successfully.');
     }
 
     // Reject booking
     public function reject($id)
     {
-        $booking = Booking::with('bookable')->findOrFail($id);
+        $booking = Booking::with('room')->findOrFail($id);
 
-        $booking->booking_status = 'rejected';
-        $booking->save();
+        // If room was assigned before rejecting
+        if ($booking->room) {
+            $booking->room->status = 'available';
+            $booking->room->save();
 
-        // Make room available again
-        if ($booking->bookable) {
-            $booking->bookable->status = 'available';
-            $booking->bookable->save();
+            $booking->room_id = null;
         }
 
-        return redirect()->back()->with('success', 'Booking rejected.');
+        $booking->booking_status = 'rejected';
+        $booking->approved_by = auth()->id();
+        $booking->save();
+
+        return back()->with('success', 'Booking rejected successfully.');
     }
 }
