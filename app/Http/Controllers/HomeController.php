@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\Event;
 use App\Models\Restaurant;
 use App\Models\EventHall;
+use App\Models\GalleryImage;
 
 class HomeController extends Controller
 {
@@ -31,14 +32,24 @@ class HomeController extends Controller
 
     // Restaurants
     $restaurants = Restaurant::latest()->take(4)->get();
-$eventHalls = EventHall::latest()->take(4)->get();
+    //Event Halls
+    $eventHalls = EventHall::latest()->take(4)->get();
+        
+            
+    //Gallery Images
+    $galleryImages = GalleryImage::where('is_approved', true)
+    ->where('show_on_homepage', true)
+    ->latest()
+    ->limit(30)
+    ->get();
+
     return view('home', compact(
-        'topReviews',
-        'featuredRoom',
-        'events',
-        'restaurants',
-        'eventHalls'
-    ));
-  
-}
+            'topReviews',
+            'featuredRoom',
+            'events',
+            'restaurants',
+            'eventHalls',
+            'galleryImages'
+        ));
+    }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\EventHallController;
+use App\Http\Controllers\AdminGalleryController;
 
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -98,3 +99,41 @@ Route::prefix('event-halls')->group(function () {
     Route::post('/{id}/book', [EventHallController::class, 'store'])->name('event-halls.store');
 });
 
+
+
+//Gallery Routes
+
+
+// Public Gallery Page (Navbar Gallery)
+Route::get('/gallery', [AdminGalleryController::class, 'galleryPage'])
+    ->name('gallery.page');
+
+// Admin Gallery Panel
+Route::prefix('admin')->group(function () {
+
+    // View all images Gallery list
+    Route::get('/gallery', [AdminGalleryController::class, 'index'])
+        ->name('admin.gallery.index');
+
+    // Create page (UPLOAD FORM)
+    Route::get('/gallery/create', [AdminGalleryController::class, 'create'])
+        ->name('admin.gallery.create');
+
+    // Upload image
+    //Store Image
+    Route::post('/gallery/store', [AdminGalleryController::class, 'store'])
+        ->name('admin.gallery.store');
+
+
+    // Approve image
+    Route::post('/gallery/approve/{id}', [AdminGalleryController::class, 'approve'])
+        ->name('admin.gallery.approve');
+
+    // Show on homepage toggle
+    Route::post('/gallery/homepage/{id}', [AdminGalleryController::class, 'Homepage'])
+        ->name('admin.gallery.homepage');
+
+    // Delete image
+    Route::delete('/gallery/{id}', [AdminGalleryController::class, 'destroy'])
+        ->name('admin.gallery.destroy');
+});

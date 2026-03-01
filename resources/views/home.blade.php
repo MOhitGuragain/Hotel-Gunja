@@ -326,6 +326,7 @@
                     ['Bar & Lounge','Premium beverages','wine'],
                     ['Laundry Service','Same-day service','shirt'],
                     ['Concierge','24/7 assistance','info'],
+                    
                 ];
             @endphp
 
@@ -364,6 +365,190 @@
 
         </div>
     </div>
+</section>
+
+
+{{-- VISUAL JOURNEY (FIXED) --}}
+<section class="py-24 px-4 bg-white">
+
+<div class="max-w-7xl mx-auto">
+
+<div class="text-center mb-16">
+<p class="text-[#D4AF37] tracking-[0.3em] text-sm uppercase mb-4">
+Gallery
+</p>
+
+<h2 class="text-5xl font-bold text-gray-900 mb-6"
+style="font-family: 'Playfair Display', serif;">
+Visual Journey
+</h2>
+
+<div class="w-24 h-1 bg-gradient-to-r from-[#800020] to-[#D4AF37] mx-auto mb-6"></div>
+</div>
+
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+
+<!-- Image 1 -->
+<div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
+<img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+<div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
+opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
+
+<p class="text-white font-semibold text-lg transform translate-y-4
+group-hover:translate-y-0 transition-transform duration-500"
+style="font-family: 'Playfair Display', serif;">
+Hotel Exterior
+</p>
+
+</div>
+</div>
+
+
+<!-- Image 2 -->
+<div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
+<img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800"
+class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+<div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
+opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
+
+<p class="text-white font-semibold text-lg transform translate-y-4
+group-hover:translate-y-0 transition-transform duration-500"
+style="font-family: 'Playfair Display', serif;">
+Hotel Lobby
+</p>
+
+</div>
+</div>
+
+
+<!-- Image 3 -->
+<div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
+<img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800"
+class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+<div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
+opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
+
+<p class="text-white font-semibold text-lg transform translate-y-4
+group-hover:translate-y-0 transition-transform duration-500"
+style="font-family: 'Playfair Display', serif;">
+Swimming Pool
+</p>
+
+</div>
+</div>
+
+
+<!-- Image 4 -->
+<div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
+<img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800"
+class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+<div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
+opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
+
+<p class="text-white font-semibold text-lg transform translate-y-4
+group-hover:translate-y-0 transition-transform duration-500"
+style="font-family: 'Playfair Display', serif;">
+Hotel Restaurant
+</p>
+
+</div>
+</div>
+
+
+<!-- Image 5 -->
+<div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
+<img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800"
+class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+<div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
+opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
+
+<p class="text-white font-semibold text-lg transform translate-y-4
+group-hover:translate-y-0 transition-transform duration-500"
+style="font-family: 'Playfair Display', serif;">
+Hotel Bar
+</p>
+
+</div>
+</div>
+
+
+<!-- Image 6 -->
+<div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
+<img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+<div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
+opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
+
+<p class="text-white font-semibold text-lg transform translate-y-4
+group-hover:translate-y-0 transition-transform duration-500"
+style="font-family: 'Playfair Display', serif;">
+Spa Area
+</p>
+
+</div>
+</div>
+
+
+</div>
+
+</div>
+</section>
+
+
+{{-- GUEST GALLERY (ADMIN CONTROLLED) --}}
+<section class="dual-gallery py-16">
+
+    <div class="container mx-auto px-6">
+
+        <h2 class="text-3xl font-bold text-center mb-10">
+            Our Gallery
+        </h2>
+
+        {{-- Row 1 (Left Sliding) --}}
+        <div class="gallery-row">
+            <div class="gallery-track left-slide">
+                @foreach($galleryImages as $image)
+                    <div class="gallery-item">
+                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image">
+                    </div>
+                @endforeach
+
+                {{-- Duplicate for infinite smooth loop --}}
+                @foreach($galleryImages as $image)
+                    <div class="gallery-item">
+                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image">
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- Row 2 (Right Sliding) --}}
+        <div class="gallery-row mt-6">
+            <div class="gallery-track right-slide">
+                @foreach($galleryImages as $image)
+                    <div class="gallery-item">
+                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image">
+                    </div>
+                @endforeach
+
+                @foreach($galleryImages as $image)
+                    <div class="gallery-item">
+                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image">
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+    </div>
+
 </section>
 
 
@@ -518,6 +703,8 @@
     </div>
 
 </section>
+
+
 {{-- - Event Halls Section --}}
 <sectiion class="relative py-24 bg-gray-50 overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-t from-[#D4AF37]/5 to-transparent"></div>
@@ -580,6 +767,7 @@
     </div>
 
 </section>
+
 {{-- ===== GUEST REVIEWS SECTION ===== --}}
 <section class="relative py-24 bg-gray-50 overflow-hidden">
 
@@ -667,8 +855,10 @@
     <!-- Background Image -->
     <div
         class="absolute inset-0 bg-cover bg-center"
-        style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600');">
+        {{-- style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600');"> --}}
+        style="background-image: url('https://lh3.googleusercontent.com/gps-cs-s/AHVAwer60mtFcFuH94HyLyzMiwJ5QsnDU3oD8UW0rFjfJObkkpmJA3RcIYCyNYvnE3mCkc6y_8_MSUK44a68IPWdt-YeX3Xc-WRO56PmC3azwv-ptztutXIgDP2x3Yr7fiyfDPaRwOF7kg=w253-h189-k-no');">
         {{-- style="background-image: url('/Images/luxury_escape.jpg');" --}}
+    
     </div>
 
     <!-- Gradient Overlay -->

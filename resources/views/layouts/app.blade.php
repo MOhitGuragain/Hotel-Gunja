@@ -67,7 +67,64 @@
     scrollbar-color: #c2a134 rgba(212, 175, 55, 0.1);
 }
 
-        
+      
+//Gallery animation
+.dual-gallery {
+    background: #f9f9f9;
+    overflow: hidden;
+}
+
+.gallery-row {
+    overflow: hidden;
+    position: relative;
+}
+
+.gallery-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+}
+
+.gallery-item {
+    width: 250px;
+    height: 180px;
+    border-radius: 18px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.15);
+}
+
+/* LEFT SCROLL */
+.left-slide {
+    animation: slideLeft 35s linear infinite;
+}
+
+/* RIGHT SCROLL */
+.right-slide {
+    animation: slideRight 35s linear infinite;
+}
+
+@keyframes slideLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes slideRight {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
     </style>
 </head>
 
@@ -84,6 +141,8 @@
         });
     });
 </script>
+
+
 
 
 

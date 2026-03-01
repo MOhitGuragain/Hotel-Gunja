@@ -87,7 +87,7 @@
                                 group-hover:w-full group-hover:left-0"></span>                             
                 </a>
 
-                <a href="#gallery" 
+                <a href="/gallery" 
                 class="{{ $navItem }} navbar-link">
                 Gallery
                     <span class="absolute bottom-0  h-0.5
@@ -145,7 +145,7 @@
             Rooms
         </a>
 
-        <a href="{{ url('/#gallery') }}"
+        <a href="{{ url('/gallery') }}"
             class="block px-6 py-4 {{ request()->is('gallery*') ? 'text-[#800020] font-semibold' : '' }}">
             Gallery
         </a>
