@@ -14,12 +14,8 @@
 
     {{-- Admin Header --}}
     <header class="bg-black text-white px-6 py-4 flex justify-between items-center">
-        <h1 class="text-lg font-semibold">Hotel Gunja — Admin</h1>
+        <h1 class="text-lg font-semibold">Hotel Gunja — {{ auth()->user()->name }}</h1>
 
-        <nav class="space-x-4 text-sm">
-            <a href="{{ route('admin.reviews.create') }}" class="hover:underline">
-                Add Review
-            </a>
             {{-- later: Logout --}}
         </nav>
     </header>

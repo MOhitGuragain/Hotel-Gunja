@@ -23,7 +23,7 @@ class GuestBookingController extends Controller
     /**
      * Store booking
      */
- public function store(Request $request, $categoryId)
+public function store(Request $request, $categoryId)
 {
     $category = RoomCategory::findOrFail($categoryId);
 
@@ -37,33 +37,38 @@ class GuestBookingController extends Controller
         'id_image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
-    // Store ID image (if uploaded)
     $imagePath = null;
-
     if ($request->hasFile('id_image')) {
         $imagePath = $request->file('id_image')->store('id_images', 'public');
     }
 
-    // Create new guest (no more fake walk-in email)
     $guest = Guest::firstOrCreate(
-    ['phone' => $request->contact_number],
-    [
-        'name'     => $request->guest_name,
-        'email'    => uniqid().'@walkin.com',
-        'id_image' => $imagePath
-    ]
-);
+        ['phone' => $request->contact_number],
+        [
+            'name'     => $request->guest_name,
+            'email'    => uniqid().'@walkin.com',
+            'id_image' => $imagePath
+        ]
+    );
 
-    // Create booking
+    $plan = \App\Models\RoomPlan::findOrFail($request->room_plan_id);
+
+    $checkIn  = Carbon::parse($request->check_in);
+    $checkOut = Carbon::parse($request->check_out);
+    $nights   = $checkIn->diffInDays($checkOut);
+    $total    = $plan->price_per_night * max($nights, 1);
+
     Booking::create([
-        'guest_id'      => $guest->id,
-        'bookable_type' => RoomCategory::class,
-        'bookable_id'   => $category->id,
-        'room_plan_id'  => $request->room_plan_id,
-        'check_in'      => $request->check_in,
-        'check_out'     => $request->check_out,
-        'guests'        => $request->guests,
-        'booking_status'=> 'pending',
+        'guest_id'        => $guest->id,
+        'bookable_type'   => RoomCategory::class,
+        'bookable_id'     => $category->id,
+        'room_category_id'=> $category->id,
+        'room_plan_id'    => $plan->id,
+        'check_in'        => $request->check_in,
+        'check_out'       => $request->check_out,
+        'guests'          => $request->guests,
+        'total_price'     => $total,
+        'booking_status'  => 'pending',
     ]);
 
     return back()->with('success', 'Booking submitted! Waiting for approval.');

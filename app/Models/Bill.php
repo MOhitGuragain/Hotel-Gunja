@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model
 {
-    protected $fillable = [
-        'booking_id','total_amount',
-        'discount','tax','net_amount','generated_by'
-    ];
+   protected $fillable = [
+    'booking_id',
+    'total_amount',
+    'discount',
+    'tax',
+    'net_amount',
+    'generated_by',
+    'status'
+];
 
     public function booking()
     {

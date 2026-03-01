@@ -18,8 +18,8 @@ class Room extends Model
         return $this->belongsTo(RoomCategory::class, 'room_category_id');
     }
 
-    public function bookings()
-    {
-        return $this->morphMany(Booking::class, 'bookable');
-    }
+   public function bookings()
+{
+    return $this->hasMany(Booking::class);
+}
 }

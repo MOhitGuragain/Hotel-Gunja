@@ -24,19 +24,22 @@ class ReviewController extends Controller
     }
 
     public function store(Request $request)
-    {
-        Review::create([
-            'name' => $request->name,
-            'location' => $request->location,
-            'rating' => $request->rating,
-            'comment' => $request->comment,
-            'status' => 'pending',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'rating' => 'required|integer|min:1|max:5',
+        'comment' => 'required|string'
+    ]);
 
-        return redirect()
-            ->route('admin.reviews.index')
-            ->with('success', 'Review added and awaiting approval.');
-    }
+    Review::create([
+        'name' => $request->name,
+        'rating' => $request->rating,
+        'comment' => $request->comment,
+        'status' => 'pending'
+    ]);
+
+    return back()->with('success', 'Review saved successfully and is pending approval.');
+}
 
     public function approve($id)
     {

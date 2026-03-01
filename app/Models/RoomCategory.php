@@ -13,12 +13,23 @@ class RoomCategory extends Model
         'max_adults',
         'max_children'
     ];
-public function plans()
+
+    // Room plans (pricing options)
+    public function plans()
     {
         return $this->hasMany(RoomPlan::class, 'room_category_id');
     }
+
+    // Physical rooms
     public function rooms()
     {
         return $this->hasMany(Room::class, 'room_category_id');
+    }
+
+    // Get default plan (first plan)
+    public function defaultPlan()
+    {
+        return $this->hasOne(RoomPlan::class, 'room_category_id')
+                    ->orderBy('id');
     }
 }

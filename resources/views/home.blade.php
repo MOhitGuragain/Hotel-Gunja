@@ -688,6 +688,9 @@ Spa Area
                             <li>{{ $restaurant->features }}</li>
                         @endif
                     </ul>
+                    <p class ="text-sm text-gray-500 mb-4">
+                        {{ $restaurant->location  }}
+                    </p>
 
                     <a href="{{ route('restaurant.show', $restaurant->id) }}"
                        class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
@@ -760,6 +763,11 @@ Spa Area
 
                     <p class="text-gray-600 mb-4 max-h-20 overflow-hidden">
                         {{ Str::limit($hall->description, 100) }}
+
+                        <a href="{{ route('event-halls.show', $hall->id) }}"
+                       class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
+                        Book Now
+                    </a>
                 </div>
             </div>
             @endforeach
@@ -936,7 +944,67 @@ Spa Area
         </a>
     </div>
 </section>
+<!-- Leave Us A Review Section -->
+<section class="relative py-24 px-6 bg-gradient-to-b from-[#1a1a1a] to-black text-white">
 
+    <div class="max-w-5xl mx-auto text-center">
+
+        <!-- Gold Divider -->
+        <div class="w-24 h-1 bg-gradient-to-r from-[#D4AF37] to-[#F4E4C1] mx-auto mb-8 rounded-full"></div>
+
+        <!-- Heading -->
+        <h3 class="text-4xl md:text-5xl font-bold mb-6"
+            style="font-family: 'Playfair Display', serif;">
+            Leave Us a Review
+        </h3>
+
+        <!-- Subtitle -->
+        <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto"
+           style="font-family: 'Cormorant Garamond', serif;">
+            Your feedback helps us elevate every stay into a memorable luxury experience.
+            Share your thoughts and inspire future guests.
+        </p>
+
+        <!-- Star Icons -->
+        <div class="flex justify-center gap-2 mb-10 text-[#D4AF37]">
+            @for($i = 0; $i < 5; $i++)
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="currentColor"
+                     class="w-8 h-8 hover:scale-125 transition-transform duration-300">
+                    <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.148 6.617h6.956c.969 0 1.371 1.24.588 1.81l-5.63 4.09 2.148 6.617c.3.921-.755 1.688-1.54 1.118L12 18.347l-5.621 4.162c-.784.57-1.838-.197-1.539-1.118l2.148-6.617-5.63-4.09c-.783-.57-.38-1.81.588-1.81h6.956l2.147-6.617z"/>
+                </svg>
+            @endfor
+        </div>
+
+        <!-- CTA Button -->
+        <a href="{{ route('reviews.create') }}">
+            <button
+                class="group inline-flex items-center justify-center gap-3
+                       bg-gradient-to-r from-[#800020] to-[#a00030]
+                       px-12 py-5 rounded-md text-lg font-semibold
+                       shadow-2xl transition-all duration-300
+                       hover:scale-105 hover:shadow-[#800020]/40">
+
+                Share Your Experience
+
+                <!-- Arrow -->
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                </svg>
+            </button>
+        </a>
+
+    </div>
+</section>
 
 
 @endsection
