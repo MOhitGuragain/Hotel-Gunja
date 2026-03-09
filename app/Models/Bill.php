@@ -20,5 +20,9 @@ class Bill extends Model
     {
         return $this->belongsTo(Booking::class);
     }
+public function generatedBy()
+{
+    return $this->belongsTo(User::class, 'generated_by');
+}
 }
 

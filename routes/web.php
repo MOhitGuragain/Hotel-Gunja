@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\EventHallController;
+use App\Http\Controllers\AdminGalleryController;
 use App\Http\Controllers\Admin\BillingController;
+use App\Http\Controllers\Admin\RestaurantOrderController;
 
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -27,6 +29,14 @@ Route::middleware(['auth', 'role:Admin,Receptionist'])
             ->name('bookings.approve');
         Route::post('/bookings/{booking}/reject', [AdminBookingController::class, 'reject'])
             ->name('bookings.reject');
+
+            Route::get('/bookings/{booking}/order-food',
+    [RestaurantOrderController::class,'create'])
+    ->name('orders.create');
+
+Route::post('/bookings/{booking}/order-food',
+    [RestaurantOrderController::class,'store'])
+    ->name('orders.store');
 });
 Route::middleware(['auth', 'role:Admin'])
     ->prefix('admin')
@@ -94,6 +104,13 @@ Route::get('/360-tour', function () {
     return view('pages.360tour');
 });
 
+// Admin: list all bookings
+Route::get('/admin/bookings', [AdminBookingController::class, 'index'])
+    ->name('admin.bookings.index');
+
+// Reviews
+Route::get('/reviews', [ReviewController::class, 'index'])
+    ->name('admin.reviews.index');
 
 
 // Restaurants
@@ -122,6 +139,44 @@ Route::prefix('event-halls')->group(function () {
 });
 use App\Http\Controllers\StaffLoginController;
 
+
+
+//Gallery Routes
+
+
+// Public Gallery Page (Navbar Gallery)
+Route::get('/gallery', [AdminGalleryController::class, 'galleryPage'])
+    ->name('gallery.page');
+
+// Admin Gallery Panel
+Route::prefix('admin')->group(function () {
+
+    // View all images Gallery list
+    Route::get('/gallery', [AdminGalleryController::class, 'index'])
+        ->name('admin.gallery.index');
+
+    // Create page (UPLOAD FORM)
+    Route::get('/gallery/create', [AdminGalleryController::class, 'create'])
+        ->name('admin.gallery.create');
+
+    // Upload image
+    //Store Image
+    Route::post('/gallery/store', [AdminGalleryController::class, 'store'])
+        ->name('admin.gallery.store');
+
+
+    // Approve image
+    Route::post('/gallery/approve/{id}', [AdminGalleryController::class, 'approve'])
+        ->name('admin.gallery.approve');
+
+    // Show on homepage toggle
+    Route::post('/gallery/homepage/{id}', [AdminGalleryController::class, 'Homepage'])
+        ->name('admin.gallery.homepage');
+
+    // Delete image
+    Route::delete('/gallery/{id}', [AdminGalleryController::class, 'destroy'])
+        ->name('admin.gallery.destroy');
+});
 Route::prefix('staff')->group(function () {
     Route::get('/login', [StaffLoginController::class, 'showLoginForm'])->name('auth.staff-login');
     Route::post('/login', [StaffLoginController::class, 'login'])->name('auth.staff-login.submit');
@@ -183,5 +238,19 @@ Route::middleware(['auth', 'role:Cashier'])
     [App\Http\Controllers\Admin\BillingController::class, 'downloadInvoice']
 )->name('invoice.download');
 
+Route::get('/admin/invoice/{bookingId}/view', 
+    [App\Http\Controllers\Admin\BillingController::class, 'viewInvoice']
+)->name('invoice.view');
+
 Route::get('/reviews/create', [ReviewController::class, 'create'])
             ->name('reviews.create');
+
+use App\Http\Controllers\Admin\AdminRoomController;
+
+Route::prefix('admin')
+    ->middleware(['auth', 'role:Admin'])
+    ->name('admin.')
+    ->group(function () {
+
+        Route::resource('rooms', AdminRoomController::class);
+});

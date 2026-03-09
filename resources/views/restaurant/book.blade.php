@@ -231,6 +231,52 @@
                         </div>
                     </div>
 
+                    {{-- FOOD MENU (OPTIONAL) --}}
+<div class="mt-10">
+
+<h2 class="text-2xl font-bold mb-6 text-gray-800">
+Pre-Order Food (Optional)
+</h2>
+
+@foreach($menuCategories as $category)
+
+<div class="mb-6">
+
+<h3 class="text-lg font-semibold text-[#800020] mb-3">
+{{ $category->name }}
+</h3>
+
+<div class="space-y-3">
+
+@foreach($category->menuItems as $item)
+
+<div class="flex justify-between items-center border p-3 rounded-lg">
+
+<div>
+<p class="font-semibold">{{ $item->name }}</p>
+<p class="text-sm text-gray-500">{{ $item->description }}</p>
+<p class="text-sm text-[#800020] font-semibold">
+Rs {{ $item->price }}
+</p>
+</div>
+
+<input type="number"
+name="food_items[{{ $item->id }}]"
+min="0"
+value="0"
+class="w-20 border rounded-lg px-2 py-1">
+
+</div>
+
+@endforeach
+
+</div>
+</div>
+
+@endforeach
+
+</div>
+
                     {{-- SUBMIT --}}
                     <button type="submit"
                             class="w-full bg-gradient-to-r from-[#800020] to-[#600018]

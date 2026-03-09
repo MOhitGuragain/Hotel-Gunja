@@ -22,4 +22,8 @@ class Room extends Model
 {
     return $this->hasMany(Booking::class);
 }
+public function plan()
+{
+    return $this->belongsTo(RoomPlan::class);
+}
 }

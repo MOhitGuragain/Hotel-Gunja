@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use App\Models\Booking;
 use App\Models\Guest;
+use App\Models\MenuCategory;
+use App\Models\MenuItem;
 
 class RestaurantController extends Controller
 {
@@ -28,16 +30,22 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Show booking page (same pattern as rooms)
+     * Show booking page
      */
     public function create($restaurantId)
     {
         $restaurant = Restaurant::findOrFail($restaurantId);
-        return view('restaurant.book', compact('restaurant'));
+
+        // Load menu categories with menu items
+        $menuCategories = MenuCategory::with(['menuItems' => function ($query) {
+            $query->where('status', 1);
+        }])->get();
+
+        return view('restaurant.book', compact('restaurant', 'menuCategories'));
     }
 
     /**
-     * Store restaurant booking
+     * Store restaurant booking + food order
      */
     public function store(Request $request, $restaurantId)
     {
@@ -48,10 +56,10 @@ class RestaurantController extends Controller
             'contact_number' => 'required|string|max:20',
             'booking_date'   => 'required|date|after_or_equal:today',
             'booking_time'   => 'required',
-            'guests' => 'required|in:2,4,6,8',
+            'guests'         => 'required|in:2,4,6,8',
         ]);
 
-        // Create or find guest (same as your rooms system)
+        // Create or find guest
         $guest = Guest::firstOrCreate(
             ['email' => 'restaurant_walkin@example.com'],
             [
@@ -60,8 +68,8 @@ class RestaurantController extends Controller
             ]
         );
 
-        // Create booking (polymorphic like rooms)
-        Booking::create([
+        // Create booking
+        $booking = Booking::create([
             'guest_id'      => $guest->id,
             'bookable_type' => Restaurant::class,
             'bookable_id'   => $restaurant->id,
@@ -71,6 +79,28 @@ class RestaurantController extends Controller
             'booking_status'=> 'pending',
         ]);
 
-        return back()->with('success', 'Restaurant booking submitted! Waiting for approval.');
+        /**
+         * Save food orders if selected
+         */
+        if ($request->has('food_items')) {
+
+            foreach ($request->food_items as $itemId => $qty) {
+
+                if ($qty > 0) {
+
+                    $menuItem = MenuItem::find($itemId);
+
+                    if ($menuItem) {
+                        $booking->menuItems()->attach($menuItem->id, [
+                            'quantity'      => $qty,
+                            'price_at_time' => $menuItem->price,
+                            'order_status'  => 'pending'
+                        ]);
+                    }
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Restaurant booking submitted with food order! Waiting for approval.');
     }
 }

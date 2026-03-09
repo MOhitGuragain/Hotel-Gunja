@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         RestaurantSeeder::class,
         RestaurantTableSeeder::class,
         EventHallSeeder::class,
+        MenuSeeder::class,
     ]);
         User::factory()->create([
             'name' => 'Test User',

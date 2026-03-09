@@ -60,5 +60,17 @@
             </a>
         </div>
     </div>
+
+    <!-- Room Management -->
+    <div class="mt-12 bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Rooms</h3>
+        <p class="text-gray-500 mb-4 text-sm">
+            Add, edit or remove hotel rooms
+        </p>
+        <a href="{{ route('admin.rooms.index') }}"
+           class="block text-center bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+            Manage Rooms
+        </a>
 </div>
+
 @endsection

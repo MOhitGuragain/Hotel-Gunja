@@ -14,17 +14,16 @@ class BillingController extends Controller
 {
 public function generateBill($bookingId)
 {
-    $booking = Booking::with('bookable.plans')->findOrFail($bookingId);
+    $booking = Booking::with(['bookable.plans', 'menuItems'])->findOrFail($bookingId);
 
     $total = 0;
 
-    // Calculate nights
-    $checkIn = Carbon::parse($booking->check_in);
-    $checkOut = Carbon::parse($booking->check_out);
-    $nights = $checkIn->diffInDays($checkOut);
-
-    // If booking is room category
+    // ROOM BOOKING
     if ($booking->bookable instanceof RoomCategory) {
+
+        $checkIn = Carbon::parse($booking->check_in);
+        $checkOut = Carbon::parse($booking->check_out);
+        $nights = $checkIn->diffInDays($checkOut);
 
         $plan = $booking->bookable->plans->first();
 
@@ -33,8 +32,16 @@ public function generateBill($bookingId)
         }
     }
 
+    // RESTAURANT BOOKING
+    if ($booking->booking_type === 'restaurant') {
+
+        $total = $booking->menuItems->sum(function ($item) {
+            return $item->pivot->price_at_time * $item->pivot->quantity;
+        });
+    }
+
     $discount = 0;
-    $tax = $total * 0.12; // 12% VAT
+    $tax = $total * 0.10; // 10% tax
     $net = $total - $discount + $tax;
 
     $bill = Bill::create([
@@ -75,6 +82,14 @@ public function markAsPaid($billId)
     $bill->save();
 
     return redirect()->back()->with('success', 'Bill marked as paid successfully.');
+}
+
+public function viewInvoice($bookingId)
+{
+    $booking = Booking::with('bookable', 'guest')->findOrFail($bookingId);
+    $bill = Bill::where('booking_id', $bookingId)->firstOrFail();
+
+    return view('admin.invoices.invoice', compact('booking', 'bill'));
 }
 }
 
