@@ -78,10 +78,10 @@ public function index()
             $booking->room_id = null;
         }
 
-        $booking->booking_status = 'rejected';
+        $booking->booking_status = 'cancelled';
         $booking->approved_by = auth()->id();
         $booking->save();
 
-        return back()->with('success', 'Booking rejected successfully.');
+        return back()->with('success', 'Booking cancelled successfully.');
     }
 }

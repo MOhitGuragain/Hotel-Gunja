@@ -102,7 +102,7 @@
                             Room
                             @break
 
-                        @case('App\Models\Restaurant')
+                        @case('App\Models\RestaurantTable')
                             Restaurant
                             @break
 
@@ -117,7 +117,7 @@
 
                 <!-- SUBTOTAL -->
                 <td class="px-4 py-3">
-                    Rs {{ number_format($bill->total_amount,2) }}
+                    Rs {{ number_format($bill->booking->final_total,2) }}
                 </td>
 
 
