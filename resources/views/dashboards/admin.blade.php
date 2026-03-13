@@ -94,4 +94,16 @@
         Manage Menus
     </a>
     </div>
+
+    <!-- Gallery Management -->
+    <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Gallery</h3>
+        <p class="text-gray-500 mb-4 text-sm">
+            Add, edit or remove gallery images
+        </p>
+        <a href="{{ route('admin.gallery.index') }}"
+           class="block text-center bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+            Manage Gallery
+        </a>
+    </div>
 @endsection
