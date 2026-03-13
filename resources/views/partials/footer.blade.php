@@ -125,7 +125,7 @@ of the city.
                         </a>
                     </li>
                     <li>
-                        <a href="#Gallery" class="footer-elegant-link">
+                        <a href="/gallery" class="footer-elegant-link">
                             <span class="hover-line"></span>
                             Gallery
                         </a>
@@ -188,7 +188,7 @@ of the city.
                         <span>+977-044-550620</span>
                     </li>
 
-                    <!-- Email -->
+                <!-- Email -->
                     <li class="contact-item">
                         <div class="contact-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -197,9 +197,11 @@ of the city.
                                 <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                             </svg>
                         </div>
-                        <span>info@hotelgunja.com.np</span>
-                    </li>
 
+                        <a href="mailto:info@hotelgunja.com.np" class="hover:text-[#D4AF37] transition">
+                            hotelgunja@gmail.com
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -231,7 +233,9 @@ of the city.
             <!-- CREDIT -->
             <p class="mt-5  text-xs text-gray-400 font-bold text-center">
                 Designed & Developed by <br>
-                <span class="text-[#D4AF37] font-medium">
+                <a href="/developers" 
+                class="text-[#D4AF37] font-medium hover:underline"
+                target="_blank">
                     Rupak Raut & Mohit Guragain
                 </span>
             </p>
