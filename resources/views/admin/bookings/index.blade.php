@@ -4,10 +4,11 @@
 
 <div class="max-w-7xl mx-auto px-6 py-10">
 
-```
-<h2 class="text-3xl font-bold text-gray-800 mb-6">
-    All Bookings
-</h2>
+
+<div class="text-center mb-12 pt-20">
+        <h1 class="text-5xl font-bold text-gray-900 mb-4">
+            All Bookings
+        </h1>
 
 {{-- Success Message --}}
 @if(session('success'))
@@ -271,7 +272,7 @@
     </table>
 
 </div>
-```
+
 
 </div>
 

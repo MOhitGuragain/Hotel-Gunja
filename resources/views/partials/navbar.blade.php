@@ -88,8 +88,8 @@
                 </a>
 
                 <a href="/gallery" 
-                class="{{ $navItem }} navbar-link">
-                Gallery
+                class="{{ $navItem }} navbar-link {{ request()->is('gallery') ? 'active' : '' }}">
+                    Gallery
                     <span class="absolute bottom-0  h-0.5
                                 bg-gradient-to-r from-[#800020] to-[#D4AF37]
                                 group-hover:w-full group-hover:left-0 "></span>

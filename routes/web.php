@@ -16,6 +16,9 @@ use App\Http\Controllers\Admin\RestaurantOrderController;
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+//developer page
+Route::view('/developers', 'developers');
+
 // Authentication routes
 Route::middleware(['auth', 'role:Admin,Receptionist'])
     ->prefix('admin')
@@ -172,6 +175,10 @@ Route::prefix('admin')->group(function () {
     // Show on homepage toggle
     Route::post('/gallery/homepage/{id}', [AdminGalleryController::class, 'Homepage'])
         ->name('admin.gallery.homepage');
+
+    // Hide from homepage
+    Route::post('/admin/gallery/hide-homepage/{id}', [AdminGalleryController::class, 'hideHomepage'])
+        ->name('admin.gallery.hideHomepage');
 
     // Delete image
     Route::delete('/gallery/{id}', [AdminGalleryController::class, 'destroy'])
