@@ -33,22 +33,41 @@ class RestaurantController extends Controller
     /**
      * Show booking page
      */
-    public function create($restaurantId)
-    {
-        $restaurant = Restaurant::findOrFail($restaurantId);
+    public function create(Request $request, $restaurantId)
+{
+    $restaurant = Restaurant::findOrFail($restaurantId);
 
-        // Load available restaurant tables
-        $tables = RestaurantTable::where('restaurant_id', $restaurantId)
-                    ->where('status', 'available')
-                    ->get();
+    $bookingDate = $request->booking_date;
+    $bookingTime = $request->booking_time;
 
-        // Load menu categories with active menu items
-        $menuCategories = MenuCategory::with(['menuItems' => function ($query) {
-            $query->where('status', 1);
-        }])->get();
+    // Load tables for this restaurant
+    $tables = RestaurantTable::where('restaurant_id', $restaurantId)
+        ->where('status', 'available')
+        ->get()
+        ->filter(function ($table) use ($bookingDate, $bookingTime) {
 
-        return view('restaurant.book', compact('restaurant','tables','menuCategories'));
-    }
+            // If date/time not selected yet, show all tables
+            if (!$bookingDate || !$bookingTime) {
+    return true;
+}
+
+return $table->isAvailable($bookingDate, $bookingTime);
+        
+        });
+
+    // Load menu categories with active menu items
+    $menuCategories = MenuCategory::with(['menuItems' => function ($query) {
+        $query->where('status', 1);
+    }])->get();
+
+    return view('restaurant.book', compact(
+        'restaurant',
+        'tables',
+        'menuCategories',
+        'bookingDate',
+        'bookingTime'
+    ));
+}
 
     /**
      * Store restaurant booking + food order
@@ -79,14 +98,15 @@ class RestaurantController extends Controller
          * Create booking
          */
         $booking = Booking::create([
-            'guest_id'      => $guest->id,
-            'bookable_type' => RestaurantTable::class,
-            'bookable_id'   => $request->table_id,
-            'check_in'      => $request->booking_date,
-            'check_out'     => $request->booking_date,
-            'guests'        => $request->guests,
-            'booking_status'=> 'pending',
-        ]);
+    'guest_id'      => $guest->id,
+    'bookable_type' => RestaurantTable::class,
+    'bookable_id'   => $request->table_id,
+    'check_in'      => $request->booking_date,
+    'check_out'     => $request->booking_date,
+    'booking_time'  => $request->booking_time,   
+    'guests'        => $request->guests,
+    'booking_status'=> 'pending',
+]);
 
         /**
          * Save food orders

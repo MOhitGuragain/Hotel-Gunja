@@ -12,7 +12,7 @@ class RestaurantTableController extends Controller
 
     public function index()
     {
-        $tables = RestaurantTable::with('restaurant')->latest()->get();
+        $tables = RestaurantTable::with('restaurant', 'bookings')->latest()->get();
 
         return view('admin.restaurant_tables.index', compact('tables'));
     }

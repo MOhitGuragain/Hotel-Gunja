@@ -117,7 +117,11 @@
 
                 {{-- Room Number --}}
                 <td class="px-4 py-3">
+                    @if ($booking->bookable instanceof \App\Models\RoomCategory)
                     {{ $booking->room->room_number ?? '-' }}
+                    @else ($booking->bookable instanceof \App\Models\RestaurantTable)
+                    {{ $booking->bookable->table_number ?? '-' }}
+                   @endif 
                 </td>
 
 

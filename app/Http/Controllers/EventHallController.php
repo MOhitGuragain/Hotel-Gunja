@@ -27,6 +27,17 @@ class EventHallController extends Controller
     public function create($id)
     {
         $hall = EventHall::findOrFail($id);
+
+$date = request('event_date');
+
+if ($date && !$hall->isAvailable($date)) {
+
+    return redirect()->back()->with(
+        'error',
+        'This hall is already booked on selected date.'
+    );
+
+}
         return view('event-halls.book', compact('hall'));
     }
 

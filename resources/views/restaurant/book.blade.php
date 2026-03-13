@@ -1,13 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+
 <section class="pt-24 pb-32 bg-gray-100 min-h-screen">
 
 <div class="max-w-7xl mx-auto px-6">
 
+@php
+$availableTables = $tables->count();
+@endphp
+
 <div class="grid md:grid-cols-2 bg-white rounded-2xl shadow-2xl overflow-hidden">
 
 {{-- LEFT PANEL --}}
+
 <div class="bg-[#800020] text-white p-12 flex flex-col justify-center">
 
 <h1 class="text-4xl font-bold mb-6">
@@ -20,6 +26,20 @@ Enjoy a luxury dining experience. Choose your table,
 select your preferred time and optionally pre-order food.
 </p>
 
+@if($availableTables > 0)
+
+<div class="bg-green-500 text-white px-4 py-2 rounded mb-6 w-fit text-sm font-semibold">
+{{ $availableTables }} Tables Available
+</div>
+
+@else
+
+<div class="bg-red-500 text-white px-4 py-2 rounded mb-6 w-fit text-sm font-semibold">
+No Tables Available
+</div>
+
+@endif
+
 <ul class="space-y-3 text-gray-200">
 <li>✔ Premium Dining</li>
 <li>✔ Comfortable Seating</li>
@@ -29,13 +49,15 @@ select your preferred time and optionally pre-order food.
 
 </div>
 
-
 {{-- RIGHT PANEL --}}
+
 <div class="p-10">
 
 <h2 class="text-2xl font-bold mb-8 text-gray-800">
 Restaurant Reservation
 </h2>
+
+@if($availableTables > 0)
 
 <form method="POST"
 action="{{ route('restaurant.book.store',$restaurant->id) }}"
@@ -43,8 +65,8 @@ class="space-y-6">
 
 @csrf
 
-
 {{-- TABLE SELECTION --}}
+
 <div>
 
 <label class="block mb-2 font-semibold text-gray-700">
@@ -87,8 +109,8 @@ Table {{ $table->table_number }}
 
 </div>
 
-
 {{-- NUMBER OF GUESTS --}}
+
 <div>
 
 <label class="block mb-2 font-semibold text-gray-700">
@@ -109,8 +131,8 @@ required>
 
 </div>
 
-
 {{-- GUEST INFO --}}
+
 <div class="grid grid-cols-2 gap-4">
 
 <div>
@@ -126,7 +148,6 @@ class="w-full border rounded-lg px-4 py-3"
 required>
 
 </div>
-
 
 <div>
 <label class="block mb-1 font-semibold text-gray-700">
@@ -144,8 +165,8 @@ required>
 
 </div>
 
-
 {{-- DATE & TIME --}}
+
 <div class="grid grid-cols-2 gap-4">
 
 <div>
@@ -156,6 +177,8 @@ Booking Date
 <input
 type="date"
 name="booking_date"
+value="{{ request('booking_date') ?? old('booking_date') }}"
+min="{{ date('Y-m-d') }}"
 class="w-full border rounded-lg px-4 py-3"
 required>
 
@@ -169,6 +192,7 @@ Booking Time
 <input
 type="time"
 name="booking_time"
+value="{{ old('booking_time') }}"
 class="w-full border rounded-lg px-4 py-3"
 required>
 
@@ -176,8 +200,8 @@ required>
 
 </div>
 
-
 {{-- FOOD MENU --}}
+
 <div class="mt-10">
 
 <h2 class="text-xl font-bold mb-6 text-gray-800">
@@ -233,8 +257,6 @@ class="w-20 border rounded px-2 py-1">
 
 </div>
 
-
-{{-- SUBMIT BUTTON --}}
 <button
 type="submit"
 class="w-full bg-[#800020] text-white py-3 rounded-xl
@@ -246,6 +268,14 @@ Confirm Reservation
 </button>
 
 </form>
+
+@else
+
+<div class="text-center text-gray-600">
+No tables available for reservation.
+</div>
+
+@endif
 
 </div>
 

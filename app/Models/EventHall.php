@@ -12,4 +12,12 @@ class EventHall extends Model
     {
         return $this->morphMany(Booking::class, 'bookable');
     }
+    public function isAvailable($date)
+{
+    return !Booking::isBooked(
+        self::class,
+        $this->id,
+        $date
+    );
+}
 }
