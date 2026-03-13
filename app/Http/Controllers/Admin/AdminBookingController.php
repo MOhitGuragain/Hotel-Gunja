@@ -71,10 +71,6 @@ class AdminBookingController extends Controller
 
             // Assign room
             $booking->room_id = $room->id;
-
-            // Mark room booked
-            $room->status = 'booked';
-            $room->save();
         }
 
 

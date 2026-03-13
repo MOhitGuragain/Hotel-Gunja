@@ -48,11 +48,11 @@ class RestaurantController extends Controller
 
             // If date/time not selected yet, show all tables
             if (!$bookingDate || !$bookingTime) {
-                return true;
-            }
+    return true;
+}
 
-            // Check dynamic availability
-            return $table->isAvailable($bookingDate, $bookingTime);
+return $table->isAvailable($bookingDate, $bookingTime);
+        
         });
 
     // Load menu categories with active menu items
@@ -98,14 +98,15 @@ class RestaurantController extends Controller
          * Create booking
          */
         $booking = Booking::create([
-            'guest_id'      => $guest->id,
-            'bookable_type' => RestaurantTable::class,
-            'bookable_id'   => $request->table_id,
-            'check_in'      => $request->booking_date,
-            'check_out'     => $request->booking_date,
-            'guests'        => $request->guests,
-            'booking_status'=> 'pending',
-        ]);
+    'guest_id'      => $guest->id,
+    'bookable_type' => RestaurantTable::class,
+    'bookable_id'   => $request->table_id,
+    'check_in'      => $request->booking_date,
+    'check_out'     => $request->booking_date,
+    'booking_time'  => $request->booking_time,   
+    'guests'        => $request->guests,
+    'booking_status'=> 'pending',
+]);
 
         /**
          * Save food orders

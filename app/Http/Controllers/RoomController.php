@@ -43,13 +43,27 @@ public function index(Request $request)
      * Show single room category details
      * (plans + rooms inside that category)
      */
-    public function show($id)
-    {
-        $category = RoomCategory::with([
-            'plans',
-            'rooms'
-        ])->findOrFail($id);
+   public function show(Request $request, $id)
+{
+    $checkIn  = $request->check_in;
+    $checkOut = $request->check_out;
 
-        return view('rooms.show', compact('category'));
+    $category = RoomCategory::with(['plans','rooms'])->findOrFail($id);
+
+    if ($checkIn && $checkOut) {
+
+        $category->available_rooms = $category->rooms->filter(function ($room) use ($checkIn, $checkOut) {
+
+            return $room->isAvailable($checkIn, $checkOut);
+
+        });
+
     }
+
+    return view('rooms.show', compact(
+        'category',
+        'checkIn',
+        'checkOut'
+    ));
+}
 }

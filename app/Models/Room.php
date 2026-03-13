@@ -29,12 +29,12 @@ public function plan()
 
 public function isAvailable($checkIn, $checkOut)
 {
-    return !Booking::where('room_id', $this->id)
+    return !$this->bookings()
         ->where('booking_status', 'approved')
         ->where(function ($query) use ($checkIn, $checkOut) {
 
-            $query->whereBetween('check_in', [$checkIn, $checkOut])
-                  ->orWhereBetween('check_out', [$checkIn, $checkOut]);
+            $query->where('check_in', '<', $checkOut)
+                  ->where('check_out', '>', $checkIn);
 
         })
         ->exists();
