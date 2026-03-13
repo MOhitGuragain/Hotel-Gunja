@@ -41,12 +41,15 @@
                     </span>
                 </div>
 
+                
                 <div>
                     <label class="block text-xs uppercase tracking-widest font-semibold opacity-100">
                         mail us
                     </label>
                     <span class="text-sm">
-                        hotelgunja@gmail.com<br>
+                        <a href="mailto:hotelgunja@gmail.com" class="hover:underline">
+                            hotelgunja@gmail.com
+                        </a><br>
                         info@hotelgunja.com.np
                     </span>
                 </div>
@@ -509,8 +512,16 @@ Spa Area
     <div class="container mx-auto px-6">
 
         <h2 class="text-3xl font-bold text-center mb-10">
-            Our Gallery
+            {{-- Special Moments --}}
+            Captures Memories
         </h2>
+
+        <div class="w-24 h-1 bg-gradient-to-r from-[#800020] to-[#D4AF37] mx-auto mb-6"></div>
+
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto text-center">
+            Beautiful memories shared by our wounderful guests.
+        </p>
+        
 
         {{-- Row 1 (Left Sliding) --}}
         <div class="gallery-row">
@@ -666,7 +677,7 @@ Spa Area
                 {{-- Image --}}
                 <div class="relative h-64 overflow-hidden group">
                     <img src="{{ asset('storage/' . $restaurant->image) }}"
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                 </div>
 
                 {{-- Content --}}
@@ -709,16 +720,20 @@ Spa Area
 
 
 {{-- - Event Halls Section --}}
-<sectiion class="relative py-24 bg-gray-50 overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-t from-[#D4AF37]/5 to-transparent"></div>
+<section class="relative py-24 bg-gray-50 overflow-hidden">
+
+    <div class="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 to-transparent"></div>
+
     <div class="relative max-w-7xl mx-auto px-4">
+
+        {{-- Header --}}
         <div class="text-center mb-16">
             <p class="text-[#D4AF37] tracking-[0.3em] uppercase text-sm mb-4">
                 Celebrate with us in our Authentic
             </p>
 
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
-                style="font-family: 'Playfair Display', serif;">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6"
+                style="font-family:'Playfair Display', serif;">
                 Event Halls
             </h2>
 
@@ -728,6 +743,7 @@ Spa Area
                 Host your special occasions in our elegant event halls.
             </p>
         </div>
+
 
         {{-- Event Halls Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -779,7 +795,7 @@ Spa Area
 {{-- ===== GUEST REVIEWS SECTION ===== --}}
 <section class="relative py-24 bg-gray-50 overflow-hidden">
 
-    <div class="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/5 to-transparent"></div>
 
     <div class="relative max-w-7xl mx-auto px-4">
 

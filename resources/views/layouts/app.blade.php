@@ -13,6 +13,71 @@
 
     {{-- Fade-in animation --}}
     <style>
+        
+        /* comment 1 for slide scroll hover */
+                :root {
+            --gold: #D4AF37;
+            --gold-light: #F4E4C1;
+            --gold-dark: #AA8A2E;
+            --maroon: #800020;
+            --maroon-dark: #600018;
+            --luxury-black: #1a1a1a;
+        }
+
+        /* =========================
+   GLOBAL WEBSITE SCROLLBAR
+   ========================= */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--luxury-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        var(--gold-light),
+        var(--gold),
+        var(--gold-dark)
+    );
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+
+    /* luxury glow */
+    box-shadow:
+        0 0 6px rgba(212,175,55,0.4),
+        inset 0 0 4px rgba(255,255,255,0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        var(--gold-light),
+        var(--gold)
+    );
+
+    box-shadow:
+        0 0 10px rgba(212,175,55,0.7),
+        inset 0 0 5px rgba(255,255,255,0.3);
+}
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--luxury-black);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+
         @keyframes fade-in {
             from {
                 opacity: 0;
@@ -67,8 +132,9 @@
     scrollbar-color: #c2a134 rgba(212, 175, 55, 0.1);
 }
 
-      
-//Gallery animation
+
+
+/* Gallery animation */
 .dual-gallery {
     background: #f9f9f9;
     overflow: hidden;
@@ -128,6 +194,21 @@
     </style>
 </head>
 
+
+<body class="font-sans text-gray-800 overflow-x-hidden">
+
+    {{-- Navbar --}}
+    @include('partials.navbar')
+
+    {{-- Page Content --}}
+    <main>
+        @yield('content')
+    </main>
+
+    {{-- Footer --}}
+    @include('partials.footer')
+
+
 {{-- Lazy-Load a Background Video and Add smooth fade-in when video starts--}}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -143,21 +224,6 @@
 </script>
 
 
-
-
-
-<body class="font-sans text-gray-800 overflow-x-hidden">
-
-    {{-- Navbar --}}
-    @include('partials.navbar')
-
-    {{-- Page Content --}}
-    <main>
-        @yield('content')
-    </main>
-
-    {{-- Footer --}}
-    @include('partials.footer')
 
 </body>
 </html>
