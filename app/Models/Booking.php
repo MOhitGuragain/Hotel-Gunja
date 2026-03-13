@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Bill;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class Booking extends Model
 {
@@ -19,6 +20,7 @@ class Booking extends Model
 
     'check_in',
     'check_out',
+    'booking_time',
     'guests',
 
     'booking_status',
@@ -182,6 +184,20 @@ public function getFinalTotalAttribute()
     $foodPrice = $this->food_total;
 
     return $roomPrice + $foodPrice;
+}
+
+public static function isBooked($type, $id, $date, $time = null)
+{
+    $query = self::where('bookable_type', $type)
+        ->where('bookable_id', $id)
+        ->whereDate('check_in', $date)
+        ->where('booking_status', 'approved');
+
+    if ($time) {
+        $query->where('booking_time', $time);
+    }
+
+    return $query->exists();
 }
 
 }

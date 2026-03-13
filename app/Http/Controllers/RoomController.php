@@ -11,23 +11,33 @@ class RoomController extends Controller
      * Show all room categories
      * (This replaces listing individual rooms)
      */
-    public function index(Request $request)
-    {
-        $checkIn  = $request->check_in;
-        $checkOut = $request->check_out;
+public function index(Request $request)
+{
+    $checkIn  = $request->check_in;
+    $checkOut = $request->check_out;
 
-        // Load categories with their plans & rooms
-        $categories = RoomCategory::with([
-            'plans',
-            'rooms'
-        ])->get();
+    $categories = RoomCategory::with(['plans','rooms'])->get();
 
-        return view('rooms.index', compact(
-            'categories',
-            'checkIn',
-            'checkOut'
-        ));
+    if ($checkIn && $checkOut) {
+
+        foreach ($categories as $category) {
+
+            $category->available_rooms = $category->rooms->filter(function ($room) use ($checkIn, $checkOut) {
+
+                return $room->isAvailable($checkIn, $checkOut);
+
+            });
+
+        }
+
     }
+
+    return view('rooms.index', compact(
+        'categories',
+        'checkIn',
+        'checkOut'
+    ));
+}
 
     /**
      * Show single room category details
