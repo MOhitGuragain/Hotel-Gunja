@@ -78,7 +78,7 @@
                             Room
                             @break
 
-                        @case('App\Models\Restaurant')
+                        @case('App\Models\RestaurantTable')
                             Restaurant
                             @break
 
@@ -93,15 +93,36 @@
                 </td>
 
 
-                {{-- Category / Name --}}
-                <td class="px-4 py-3">
-                    {{ $booking->bookable->name ?? '-' }}
-                </td>
+              <td class="px-4 py-3">
+
+@if($booking->bookable instanceof \App\Models\RoomCategory)
+
+    {{ $booking->bookable->name }}
+
+@elseif($booking->bookable instanceof \App\Models\EventHall)
+
+    {{ $booking->bookable->name }}
+
+@elseif($booking->bookable instanceof \App\Models\RestaurantTable)
+
+    {{ $booking->bookable->restaurant->name ?? '-' }}
+
+@else
+
+    -
+
+@endif
+
+</td>
 
 
                 {{-- Room Number --}}
                 <td class="px-4 py-3">
+                    @if ($booking->bookable instanceof \App\Models\RoomCategory)
                     {{ $booking->room->room_number ?? '-' }}
+                    @else ($booking->bookable instanceof \App\Models\RestaurantTable)
+                    {{ $booking->bookable->table_number ?? '-' }}
+                   @endif 
                 </td>
 
 

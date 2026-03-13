@@ -26,4 +26,18 @@ public function plan()
 {
     return $this->belongsTo(RoomPlan::class);
 }
+
+public function isAvailable($checkIn, $checkOut)
+{
+    return !$this->bookings()
+        ->where('booking_status', 'approved')
+        ->where(function ($query) use ($checkIn, $checkOut) {
+
+            $query->where('check_in', '<', $checkOut)
+                  ->where('check_out', '>', $checkIn);
+
+        })
+        ->exists();
+}
+
 }

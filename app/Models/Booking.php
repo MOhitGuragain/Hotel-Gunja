@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Bill;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class Booking extends Model
 {
@@ -19,6 +20,7 @@ class Booking extends Model
 
     'check_in',
     'check_out',
+    'booking_time',
     'guests',
 
     'booking_status',
@@ -109,20 +111,35 @@ protected static function booted()
             $bookable = $booking->bookable;
             $total = 0;
 
+            // ROOM BOOKING
             if ($bookable instanceof \App\Models\RoomCategory) {
 
                 $price  = $booking->plan->price_per_night ?? 0;
                 $nights = $booking->check_in->diffInDays($booking->check_out);
                 $total  = $price * max($nights, 1);
 
-            } elseif ($bookable instanceof \App\Models\EventHall) {
+            }
+
+            // EVENT HALL BOOKING
+            elseif ($bookable instanceof \App\Models\EventHall) {
 
                 $total = $bookable->price_per_hour;
 
-            } elseif ($bookable instanceof \App\Models\Restaurant) {
+            }
 
-                $total = 0;
+            // RESTAURANT TABLE BOOKING
+            elseif ($bookable instanceof \App\Models\RestaurantTable) {
 
+                // Calculate food total
+                $foodTotal = $booking->menuItems->sum(function ($item) {
+                    return $item->pivot->price_at_time * $item->pivot->quantity;
+                });
+
+                $total = $foodTotal;
+
+                // Mark the table as reserved
+                $bookable->status = 'reserved';
+                $bookable->save();
             }
 
             $tax = $total * 0.10;
@@ -167,6 +184,20 @@ public function getFinalTotalAttribute()
     $foodPrice = $this->food_total;
 
     return $roomPrice + $foodPrice;
+}
+
+public static function isBooked($type, $id, $date, $time = null)
+{
+    $query = self::where('bookable_type', $type)
+        ->where('bookable_id', $id)
+        ->whereDate('check_in', $date)
+        ->where('booking_status', 'approved');
+
+    if ($time) {
+        $query->where('booking_time', $time);
+    }
+
+    return $query->exists();
 }
 
 }

@@ -59,10 +59,8 @@
                 Go to Reviews
             </a>
         </div>
-    </div>
 
-    <!-- Room Management -->
-    <div class="mt-12 bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition">
+        <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition">
         <h3 class="text-xl font-semibold mb-2">Manage Rooms</h3>
         <p class="text-gray-500 mb-4 text-sm">
             Add, edit or remove hotel rooms
@@ -73,4 +71,27 @@
         </a>
 </div>
 
+<!-- Restaurant Management -->
+<div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition">
+    <h3 class="text-xl font-semibold mb-2">Manage Restaurant</h3>
+    <p class="text-gray-500 mb-4 text-sm">
+        Add, edit or remove restaurant tables
+    </p>
+    <a href="{{ route('admin.restaurant-tables.index') }}"
+       class="block text-center bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+        Manage Restaurant Tables
+    </a>
+</div>
+
+<!-- Menu Management -->
+<div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition">
+    <h3 class="text-xl font-semibold mb-2">Manage Menus </h3>
+    <p class="text-gray-500 mb-4 text-sm">
+        Add, edit or remove food items
+    </p>
+    <a href="{{ route('admin.menu-items.index') }}"
+       class="block text-center bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+        Manage Menus
+    </a>
+    </div>
 @endsection

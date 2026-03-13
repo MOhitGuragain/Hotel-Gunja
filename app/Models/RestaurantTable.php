@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Booking;
 class RestaurantTable extends Model
 {
     protected $fillable = ['restaurant_id','table_number','capacity','status'];
@@ -13,9 +13,20 @@ class RestaurantTable extends Model
         return $this->belongsTo(Restaurant::class);
     }
 
-    public function bookings()
-    {
-        return $this->morphMany(Booking::class, 'bookable');
-    }
+   public function bookings()
+{
+    return $this->hasMany(Booking::class, 'bookable_id')
+        ->where('bookable_type', self::class);
+}
+
+public function isAvailable($date, $time)
+{
+    return !$this->bookings()
+        ->where('booking_status', 'approved')
+        ->whereDate('check_in', $date)
+        ->where('booking_time', $time)
+        ->exists();
+}
+
 }
 

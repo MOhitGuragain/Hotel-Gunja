@@ -261,3 +261,21 @@ Route::prefix('admin')
 
         Route::resource('rooms', AdminRoomController::class);
 });
+
+use App\Http\Controllers\Admin\MenuItemController;
+
+Route::prefix('admin')->name('admin.')->group(function(){
+
+    Route::resource('menu-items', MenuItemController::class)
+        ->except(['show','destroy']);
+
+});
+
+use App\Http\Controllers\Admin\RestaurantTableController;
+
+Route::prefix('admin')->name('admin.')->group(function(){
+
+    Route::resource('restaurant-tables', RestaurantTableController::class)
+        ->except(['show','destroy']);
+
+});

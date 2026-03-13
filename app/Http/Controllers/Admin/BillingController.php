@@ -14,46 +14,26 @@ class BillingController extends Controller
 {
 public function generateBill($bookingId)
 {
-    $booking = Booking::with(['bookable.plans', 'menuItems'])->findOrFail($bookingId);
+    $booking = Booking::with('menuItems')->findOrFail($bookingId);
 
-    $total = 0;
-
-    // ROOM BOOKING
-    if ($booking->bookable instanceof RoomCategory) {
-
-        $checkIn = Carbon::parse($booking->check_in);
-        $checkOut = Carbon::parse($booking->check_out);
-        $nights = $checkIn->diffInDays($checkOut);
-
-        $plan = $booking->bookable->plans->first();
-
-        if ($plan) {
-            $total = $plan->price_per_night * $nights;
-        }
-    }
-
-    // RESTAURANT BOOKING
-    if ($booking->booking_type === 'restaurant') {
-
-        $total = $booking->menuItems->sum(function ($item) {
-            return $item->pivot->price_at_time * $item->pivot->quantity;
-        });
-    }
+    $total = $booking->final_total;
 
     $discount = 0;
-    $tax = $total * 0.10; // 10% tax
-    $net = $total - $discount + $tax;
+    $tax = $total * 0.10;
+    $net = $total + $tax - $discount;
 
-    $bill = Bill::create([
-        'booking_id' => $booking->id,
-        'total_amount' => $total,
-        'discount' => $discount,
-        'tax' => $tax,
-        'net_amount' => $net,
-        'generated_by' => auth()->id(),
-    ]);
+    Bill::updateOrCreate(
+        ['booking_id' => $booking->id],
+        [
+            'total_amount' => $total,
+            'discount' => $discount,
+            'tax' => $tax,
+            'net_amount' => $net,
+            'generated_by' => auth()->id(),
+        ]
+    );
 
-    return redirect()->back()->with('success', 'Bill generated successfully.');
+    return redirect()->back()->with('success','Bill generated successfully.');
 }
 
 public function downloadInvoice($bookingId)
