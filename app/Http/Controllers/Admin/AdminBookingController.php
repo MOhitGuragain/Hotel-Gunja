@@ -74,27 +74,27 @@ class AdminBookingController extends Controller
         }
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | RESTAURANT TABLE BOOKING
-        |--------------------------------------------------------------------------
-        */
+       /*
+|--------------------------------------------------------------------------
+| RESTAURANT TABLE BOOKING
+|--------------------------------------------------------------------------
+*/
 
-        if ($booking->bookable_type === RestaurantTable::class) {
+if ($booking->bookable_type === RestaurantTable::class) {
 
-            $table = $booking->bookable;
+    $table = $booking->bookable;
 
-            if (!$table->isAvailable(
-                $booking->check_in,
-                $booking->booking_time
-            )) {
+    if (!$table->isAvailable(
+        $booking->check_in,
+        $booking->time_slot_id
+    )) {
 
-                return back()->with(
-                    'error',
-                    'This table is already reserved for that time.'
-                );
-            }
-        }
+        return back()->with(
+            'error',
+            'This table is already reserved for that time slot.'
+        );
+    }
+}
 
 
         /*

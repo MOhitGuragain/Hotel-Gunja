@@ -13,4 +13,8 @@ class Restaurant extends Model
     {
         return $this->hasMany(RestaurantTable::class);
     }
+    public function timeSlots()
+{
+    return $this->hasMany(TimeSlot::class);
+}
 }
