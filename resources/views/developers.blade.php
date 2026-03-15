@@ -142,9 +142,10 @@ throughout the system development.
 <!-- Developer Card 3 -->
 <div class="dev-card">
 
-<img src="https://media.licdn.com/dms/image/v2/D5603AQFEyVEXOGW8Vw/profile-displayphoto-scale_200_200/B56ZznMlykI0AY-/0/1773405368215?e=1775088000&v=beta&t=E8h6w2lVvPAJezfp9SiXCjOZCWdFd59Xj7WycIDdNU0"
+<!-- <img src="https://media.licdn.com/dms/image/v2/D5603AQFEyVEXOGW8Vw/profile-displayphoto-scale_200_200/B56ZznMlykI0AY-/0/1773405368215?e=1775088000&v=beta&t=E8h6w2lVvPAJezfp9SiXCjOZCWdFd59Xj7WycIDdNU0"
+class="dev-img"> -->
+<img src="https://i.pravatar.cc/300?img=15"
 class="dev-img">
-
 <h3 class="dev-name">
 Rupak Raut
 </h3>
@@ -192,9 +193,10 @@ Focused on frontend UI with Blade templates and backend integration using larave
 <!-- CARD 4 -->
 <div class="dev-card">
 
-<img src="https://media.licdn.com/dms/image/v2/D4D03AQEGAh1gHlE5Kw/profile-displayphoto-crop_800_800/B4DZgCDQpiHMAI-/0/1752381068415?e=1775088000&v=beta&t=-XWZQYKOuq94RkIgAH_Itu-cPqFCmJa6UFZDyHo1W2k"
+<!-- <img src="https://media.licdn.com/dms/image/v2/D4D03AQEGAh1gHlE5Kw/profile-displayphoto-crop_800_800/B4DZgCDQpiHMAI-/0/1752381068415?e=1775088000&v=beta&t=-XWZQYKOuq94RkIgAH_Itu-cPqFCmJa6UFZDyHo1W2k"
+class="dev-img"> -->
+<img src="https://i.pravatar.cc/300?img=15"
 class="dev-img">
-
 <h3 class="dev-name">
 Mohit Guragain
 </h3>

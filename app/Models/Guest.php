@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Guest extends Model
 {
-    protected $fillable = ['name','email','phone'];
+    protected $fillable = [
+    'name',
+    'phone',
+    'email',
+    'id_image'
+];
 
     public function bookings()
     {

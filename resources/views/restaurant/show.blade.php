@@ -10,6 +10,8 @@
 $availableTables = isset($restaurant->available_tables)
 ? $restaurant->available_tables->count()
 : $restaurant->tables->count();
+
+$timeSlots = $restaurant->timeSlots ?? [];
 @endphp
 
 <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -64,7 +66,7 @@ Sold Out
 <div class="flex justify-between">
 <span class="font-semibold text-gray-700">Opening Hours</span>
 <span class="text-[#800020] font-semibold">
-10:00 AM - 10:00 PM
+{{ $restaurant->opening_time }} - {{ $restaurant->closing_time }}
 </span>
 </div>
 
@@ -76,6 +78,8 @@ Sold Out
 action="{{ route('restaurant.show',$restaurant->id) }}"
 class="grid grid-cols-2 gap-4">
 
+{{-- DATE --}}
+
 <div>
 <label class="text-sm font-semibold text-gray-700">
 Reservation Date
@@ -86,18 +90,34 @@ name="booking_date"
 value="{{ request('booking_date') }}"
 min="{{ date('Y-m-d') }}"
 class="w-full border rounded-lg px-4 py-2">
-
 </div>
+
+{{-- TIME SLOT --}}
 
 <div>
 <label class="text-sm font-semibold text-gray-700">
-Reservation Time
+Reservation Time Slot
 </label>
 
-<input type="time"
-name="booking_time"
-value="{{ request('booking_time') }}"
+<select name="time_slot_id"
 class="w-full border rounded-lg px-4 py-2">
+
+<option value="">Select Time Slot</option>
+
+@foreach($timeSlots as $slot)
+
+<option value="{{ $slot->id }}"
+{{ request('time_slot_id') == $slot->id ? 'selected' : '' }}>
+
+{{ \Carbon\Carbon::parse($slot->start_time)->format('h:i A') }}
+-
+{{ \Carbon\Carbon::parse($slot->end_time)->format('h:i A') }}
+
+</option>
+
+@endforeach
+
+</select>
 
 </div>
 
@@ -116,12 +136,12 @@ Check Availability
 
 </div>
 
-@if(request('booking_date') && request('booking_time') && $availableTables > 0)
+@if(request('booking_date') && request('time_slot_id') && $availableTables > 0)
 
 <a href="{{ route('restaurant.book',[
 'id'=>$restaurant->id,
 'booking_date'=>request('booking_date'),
-'booking_time'=>request('booking_time')
+'time_slot_id'=>request('time_slot_id')
 ]) }}"
 class="inline-block bg-gradient-to-r from-[#800020] to-[#600018]
 text-white px-8 py-3 rounded-xl text-lg font-semibold

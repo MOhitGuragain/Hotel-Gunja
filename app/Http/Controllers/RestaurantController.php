@@ -9,9 +9,11 @@ use App\Models\Booking;
 use App\Models\Guest;
 use App\Models\MenuCategory;
 use App\Models\MenuItem;
+use App\Models\TimeSlot;
 
 class RestaurantController extends Controller
 {
+
     /**
      * Show all restaurants
      */
@@ -21,120 +23,173 @@ class RestaurantController extends Controller
         return view('restaurant.index', compact('restaurants'));
     }
 
+
     /**
-     * Show single restaurant details
+     * Show single restaurant
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $restaurant = Restaurant::findOrFail($id);
+        $restaurant = Restaurant::with(['tables','timeSlots'])->findOrFail($id);
+
+        $bookingDate = $request->booking_date;
+        $slotId = $request->time_slot_id;
+
+        $availableTables = collect();
+
+        if ($bookingDate && $slotId) {
+
+            $availableTables = $restaurant->tables
+                ->where('status','available')
+                ->filter(function ($table) use ($bookingDate,$slotId) {
+
+                    return $table->isAvailable($bookingDate,$slotId);
+
+                });
+
+            $restaurant->available_tables = $availableTables;
+        }
+
         return view('restaurant.show', compact('restaurant'));
     }
 
+
     /**
-     * Show booking page
+     * Show reservation page
      */
     public function create(Request $request, $restaurantId)
-{
-    $restaurant = Restaurant::findOrFail($restaurantId);
+    {
 
-    $bookingDate = $request->booking_date;
-    $bookingTime = $request->booking_time;
+        $restaurant = Restaurant::findOrFail($restaurantId);
 
-    // Load tables for this restaurant
-    $tables = RestaurantTable::where('restaurant_id', $restaurantId)
-        ->where('status', 'available')
-        ->get()
-        ->filter(function ($table) use ($bookingDate, $bookingTime) {
+        $bookingDate = $request->booking_date;
+        $slotId = $request->time_slot_id;
 
-            // If date/time not selected yet, show all tables
-            if (!$bookingDate || !$bookingTime) {
-    return true;
-}
+        $timeSlot = TimeSlot::find($slotId);
 
-return $table->isAvailable($bookingDate, $bookingTime);
-        
-        });
+        $tables = RestaurantTable::where('restaurant_id',$restaurantId)
+            ->where('status','available')
+            ->get()
+            ->filter(function ($table) use ($bookingDate,$slotId){
 
-    // Load menu categories with active menu items
-    $menuCategories = MenuCategory::with(['menuItems' => function ($query) {
-        $query->where('status', 1);
-    }])->get();
+                if(!$bookingDate || !$slotId){
+                    return true;
+                }
 
-    return view('restaurant.book', compact(
-        'restaurant',
-        'tables',
-        'menuCategories',
-        'bookingDate',
-        'bookingTime'
-    ));
-}
+                return $table->isAvailable($bookingDate,$slotId);
+
+            });
+
+        $menuCategories = MenuCategory::with(['menuItems' => function($q){
+            $q->where('status',1);
+        }])->get();
+
+        return view('restaurant.book',compact(
+            'restaurant',
+            'tables',
+            'menuCategories',
+            'bookingDate',
+            'timeSlot'
+        ));
+    }
+
+
 
     /**
-     * Store restaurant booking + food order
+     * Store booking
      */
-    public function store(Request $request, $restaurantId)
+    public function store(Request $request,$restaurantId)
     {
+
         $restaurant = Restaurant::findOrFail($restaurantId);
 
         $request->validate([
             'guest_name'     => 'required|string|max:255',
             'contact_number' => 'required|string|max:20',
             'booking_date'   => 'required|date|after_or_equal:today',
-            'booking_time'   => 'required',
             'guests'         => 'required|in:2,4,6,8',
             'table_id'       => 'required|exists:restaurant_tables,id',
+            'time_slot_id'   => 'required|exists:time_slots,id'
         ]);
 
-        /**
-         * Create guest
-         */
+
+
+        /*
+        |--------------------------------
+        | CREATE GUEST
+        |--------------------------------
+        */
+
         $guest = Guest::create([
             'name'  => $request->guest_name,
             'phone' => $request->contact_number,
             'email' => null
         ]);
 
-        /**
-         * Create booking
-         */
+
+
+        /*
+        |--------------------------------
+        | CREATE BOOKING
+        |--------------------------------
+        */
+
         $booking = Booking::create([
-    'guest_id'      => $guest->id,
-    'bookable_type' => RestaurantTable::class,
-    'bookable_id'   => $request->table_id,
-    'check_in'      => $request->booking_date,
-    'check_out'     => $request->booking_date,
-    'booking_time'  => $request->booking_time,   
-    'guests'        => $request->guests,
-    'booking_status'=> 'pending',
-]);
 
-        /**
-         * Save food orders
-         */
-        if ($request->has('food_items')) {
+            'guest_id'      => $guest->id,
 
-            foreach ($request->food_items as $itemId => $qty) {
+            'bookable_type' => RestaurantTable::class,
+            'bookable_id'   => $request->table_id,
 
-                if ($qty > 0) {
+            'check_in'      => $request->booking_date,
+            'check_out'     => $request->booking_date,
+
+            'time_slot_id'  => $request->time_slot_id,
+
+            'guests'        => $request->guests,
+
+            'booking_status'=> 'pending'
+
+        ]);
+
+
+
+        /*
+        |--------------------------------
+        | SAVE FOOD ORDERS
+        |--------------------------------
+        */
+
+        if($request->has('food_items')){
+
+            foreach($request->food_items as $itemId => $qty){
+
+                if($qty > 0){
 
                     $menuItem = MenuItem::find($itemId);
 
-                    if ($menuItem) {
+                    if($menuItem){
 
-                        $booking->menuItems()->attach($menuItem->id, [
+                        $booking->menuItems()->attach($menuItem->id,[
+
                             'quantity'      => $qty,
                             'price_at_time' => $menuItem->price,
                             'order_status'  => 'pending'
+
                         ]);
 
                     }
+
                 }
+
             }
+
         }
 
-        return redirect()->back()->with(
-            'success',
-            'Restaurant table booking submitted successfully! Waiting for approval.'
-        );
+
+        return redirect()
+            ->route('restaurant.show',$restaurant->id)
+            ->with('success','Table reservation submitted. Waiting for approval.');
+
     }
+
 }

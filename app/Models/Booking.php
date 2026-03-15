@@ -137,9 +137,6 @@ protected static function booted()
 
                 $total = $foodTotal;
 
-                // Mark the table as reserved
-                $bookable->status = 'reserved';
-                $bookable->save();
             }
 
             $tax = $total * 0.10;
@@ -198,6 +195,11 @@ public static function isBooked($type, $id, $date, $time = null)
     }
 
     return $query->exists();
+}
+
+public function timeSlot()
+{
+    return $this->belongsTo(TimeSlot::class);
 }
 
 }

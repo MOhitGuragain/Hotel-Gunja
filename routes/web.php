@@ -152,7 +152,7 @@ Route::get('/gallery', [AdminGalleryController::class, 'galleryPage'])
     ->name('gallery.page');
 
 // Admin Gallery Panel
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:Admin'])->prefix('admin')->group(function () {
 
     // View all images Gallery list
     Route::get('/gallery', [AdminGalleryController::class, 'index'])
@@ -184,6 +184,8 @@ Route::prefix('admin')->group(function () {
     Route::delete('/gallery/{id}', [AdminGalleryController::class, 'destroy'])
         ->name('admin.gallery.destroy');
 });
+
+
 Route::prefix('staff')->group(function () {
     Route::get('/login', [StaffLoginController::class, 'showLoginForm'])->name('auth.staff-login');
     Route::post('/login', [StaffLoginController::class, 'login'])->name('auth.staff-login.submit');

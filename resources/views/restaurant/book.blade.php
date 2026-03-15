@@ -8,6 +8,8 @@
 
 @php
 $availableTables = $tables->count();
+$bookingDate = request('booking_date');
+$timeSlot = $timeSlot ?? null;
 @endphp
 
 <div class="grid md:grid-cols-2 bg-white rounded-2xl shadow-2xl overflow-hidden">
@@ -25,6 +27,23 @@ Reserve a Table at <br>
 Enjoy a luxury dining experience. Choose your table,
 select your preferred time and optionally pre-order food.
 </p>
+
+@if($bookingDate && $timeSlot)
+
+<div class="bg-white text-[#800020] px-4 py-2 rounded mb-6 text-sm font-semibold w-fit">
+
+Reservation:
+{{ \Carbon\Carbon::parse($bookingDate)->format('M d, Y') }}
+
+<br>
+
+{{ \Carbon\Carbon::parse($timeSlot->start_time)->format('h:i A') }}
+-
+{{ \Carbon\Carbon::parse($timeSlot->end_time)->format('h:i A') }}
+
+</div>
+
+@endif
 
 @if($availableTables > 0)
 
@@ -65,7 +84,10 @@ class="space-y-6">
 
 @csrf
 
-{{-- TABLE SELECTION --}}
+<input type="hidden" name="booking_date" value="{{ $bookingDate }}">
+<input type="hidden" name="time_slot_id" value="{{ $timeSlot->id }}">
+
+{{-- TABLES --}}
 
 <div>
 
@@ -109,7 +131,7 @@ Table {{ $table->table_number }}
 
 </div>
 
-{{-- NUMBER OF GUESTS --}}
+{{-- GUESTS --}}
 
 <div>
 
@@ -136,6 +158,7 @@ required>
 <div class="grid grid-cols-2 gap-4">
 
 <div>
+
 <label class="block mb-1 font-semibold text-gray-700">
 Guest Name
 </label>
@@ -150,6 +173,7 @@ required>
 </div>
 
 <div>
+
 <label class="block mb-1 font-semibold text-gray-700">
 Contact Number
 </label>
@@ -158,41 +182,6 @@ Contact Number
 type="text"
 name="contact_number"
 value="{{ old('contact_number') }}"
-class="w-full border rounded-lg px-4 py-3"
-required>
-
-</div>
-
-</div>
-
-{{-- DATE & TIME --}}
-
-<div class="grid grid-cols-2 gap-4">
-
-<div>
-<label class="block mb-1 font-semibold text-gray-700">
-Booking Date
-</label>
-
-<input
-type="date"
-name="booking_date"
-value="{{ request('booking_date') ?? old('booking_date') }}"
-min="{{ date('Y-m-d') }}"
-class="w-full border rounded-lg px-4 py-3"
-required>
-
-</div>
-
-<div>
-<label class="block mb-1 font-semibold text-gray-700">
-Booking Time
-</label>
-
-<input
-type="time"
-name="booking_time"
-value="{{ old('booking_time') }}"
 class="w-full border rounded-lg px-4 py-3"
 required>
 
@@ -272,7 +261,7 @@ Confirm Reservation
 @else
 
 <div class="text-center text-gray-600">
-No tables available for reservation.
+No tables available for this date and time.
 </div>
 
 @endif
@@ -284,4 +273,5 @@ No tables available for reservation.
 </div>
 
 </section>
+
 @endsection
