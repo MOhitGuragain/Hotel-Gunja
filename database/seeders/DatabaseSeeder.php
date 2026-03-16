@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         EventHallSeeder::class,
         MenuSeeder::class,
         TimeSlotSeeder::class,
+        HomepageImageSeeder::class,
     ]);
         User::factory()->create([
             'name' => 'Test User',

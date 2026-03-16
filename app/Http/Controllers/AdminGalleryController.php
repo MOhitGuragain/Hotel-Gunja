@@ -122,7 +122,7 @@ class AdminGalleryController extends Controller
             ->get();
 
         // Event hall images
-$eventImages = GalleryImage::where('category', 'event')
+$eventImages = GalleryImage::where('category', 'hall')
     ->where('is_approved', 1)
     ->latest()
     ->get();
@@ -134,7 +134,7 @@ $loungeImages = GalleryImage::where('category', 'lounges')
     ->get();
 
 // Food images
-$foodImages = GalleryImage::where('category', 'food')
+$foodImages = GalleryImage::where('category', 'food & drinks')
     ->where('is_approved', 1)
     ->latest()
     ->get();
@@ -146,7 +146,7 @@ $restaurantImages = GalleryImage::where('category', 'restaurant')
     ->get();
 
 // Pool images
-$poolImages = GalleryImage::where('category', 'pool')
+$poolImages = GalleryImage::where('category', 'swimming pool')
     ->where('is_approved', 1)
     ->latest()
     ->get();
