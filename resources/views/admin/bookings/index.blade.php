@@ -35,6 +35,8 @@
             <tr>
                 <th class="px-4 py-3">ID</th>
                 <th class="px-4 py-3">Guest</th>
+                <th class="px-4 py-3">Phone Number</th>
+                <th class="px-4 py-3"> ID image</th>
                 <th class="px-4 py-3">Type</th>
                 <th class="px-4 py-3">Category / Name</th>
                 <th class="px-4 py-3">Room No</th>
@@ -68,6 +70,27 @@
                     {{ $booking->guest->name ?? 'Walk-in Guest' }}
                 </td>
 
+                {{-- Phone Number --}}
+                <td class="px-4 py-3">
+                    {{ $booking->guest->phone ?? 'N/A' }}
+                </td>
+
+                {{-- ID Image --}}
+                <td class="px-4 py-3">
+
+@if($booking->guest && $booking->guest->id_image)
+
+<img src="{{ asset('storage/'.$booking->guest->id_image) }}"
+     onclick="openImageModal('{{ asset('storage/'.$booking->guest->id_image) }}')"
+     class="w-12 h-12 object-cover rounded cursor-pointer hover:scale-110 transition">
+
+@else
+
+<span class="text-gray-400">No ID</span>
+
+@endif
+
+</td>             
 
                 {{-- Booking Type --}}
                 <td class="px-4 py-3 font-semibold">
@@ -275,5 +298,43 @@
 
 
 </div>
+
+
+{{-- IMAGE MODAL --}}
+
+<div id="imageModal"
+     class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+
+<div class="relative">
+
+<button onclick="closeImageModal()"
+        class="absolute -top-8 right-0 text-white text-3xl font-bold">
+×
+</button>
+
+<img id="modalImage"
+     src=""
+     class="max-h-[80vh] max-w-[90vw] rounded-lg shadow-2xl">
+
+</div>
+
+</div>
+
+<script>
+
+function openImageModal(src)
+{
+    document.getElementById('modalImage').src = src;
+    document.getElementById('imageModal').classList.remove('hidden');
+    document.getElementById('imageModal').classList.add('flex');
+}
+
+function closeImageModal()
+{
+    document.getElementById('imageModal').classList.add('hidden');
+}
+
+</script>
+
 
 @endsection
