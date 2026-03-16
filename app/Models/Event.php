@@ -10,6 +10,9 @@ class Event extends Model
         'title',
         'description',
         'event_date',
-        'location'
+        'event_time',
+        'location',
+        'image',
+        'is_approved'
     ];
 }

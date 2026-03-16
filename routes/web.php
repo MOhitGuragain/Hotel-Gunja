@@ -12,11 +12,13 @@ use App\Http\Controllers\EventHallController;
 use App\Http\Controllers\AdminGalleryController;
 use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\Admin\RestaurantOrderController;
+use App\Http\Controllers\StaffLoginController;
+// use App\Http\Controllers\Admin\HomepageImageController;
 
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-//developer page
+//developer info page
 Route::view('/developers', 'developers');
 
 // Authentication routes
@@ -34,17 +36,17 @@ Route::middleware(['auth', 'role:Admin,Receptionist'])
             ->name('bookings.reject');
 
             Route::get('/bookings/{booking}/order-food',
-    [RestaurantOrderController::class,'create'])
-    ->name('orders.create');
+                [RestaurantOrderController::class,'create'])
+                ->name('orders.create');
 
-Route::post('/bookings/{booking}/order-food',
-    [RestaurantOrderController::class,'store'])
-    ->name('orders.store');
-});
-Route::middleware(['auth', 'role:Admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
+            Route::post('/bookings/{booking}/order-food',
+                [RestaurantOrderController::class,'store'])
+                ->name('orders.store');
+            });
+            Route::middleware(['auth', 'role:Admin'])
+                ->prefix('admin')
+                ->name('admin.')
+                ->group(function () {
         /*
         |--------------------------------------------------------------------------
         | Admin Events
@@ -61,6 +63,10 @@ Route::middleware(['auth', 'role:Admin'])
 
         Route::delete('/events/{id}', [EventController::class, 'destroy'])
             ->name('events.destroy');
+
+        // Approve events
+        Route::post('/events/{id}/approve', [EventController::class, 'approve'])
+            ->name('events.approve');
 
         /*
         |--------------------------------------------------------------------------
@@ -87,60 +93,60 @@ Route::middleware(['auth', 'role:Admin'])
             ->name('reviews.restore');
     });
 
-// Rooms listing
-Route::get('/rooms', [RoomController::class, 'index'])
-    ->name('rooms.index');
+        // Rooms listing
+        Route::get('/rooms', [RoomController::class, 'index'])
+            ->name('rooms.index');
 
-// Book a room
-Route::get('/rooms/{id}/book', [GuestBookingController::class, 'create'])
-    ->name('rooms.book');
+        // Book a room
+        Route::get('/rooms/{id}/book', [GuestBookingController::class, 'create'])
+            ->name('rooms.book');
 
-Route::post('/rooms/{id}/book', [GuestBookingController::class, 'store'])
-    ->name('rooms.book.store');
+        Route::post('/rooms/{id}/book', [GuestBookingController::class, 'store'])
+            ->name('rooms.book.store');
 
-// Show room details
-Route::get('/rooms/{id}', [RoomController::class, 'show'])
-    ->name('rooms.show');
+        // Show room details
+        Route::get('/rooms/{id}', [RoomController::class, 'show'])
+            ->name('rooms.show');
 
-// 360 tour
-Route::get('/360-tour', function () {
-    return view('pages.360tour');
-});
+        // 360 tour
+        Route::get('/360-tour', function () {
+            return view('pages.360tour');
+        });
 
-// Admin: list all bookings
-Route::get('/admin/bookings', [AdminBookingController::class, 'index'])
-    ->name('admin.bookings.index');
+        // Admin: list all bookings
+        Route::get('/admin/bookings', [AdminBookingController::class, 'index'])
+            ->name('admin.bookings.index');
 
-// Reviews
-Route::get('/reviews', [ReviewController::class, 'index'])
-    ->name('admin.reviews.index');
+        // Reviews
+        Route::get('/reviews', [ReviewController::class, 'index'])
+            ->name('admin.reviews.index');
 
 
-// Restaurants
-Route::get('/restaurants', [RestaurantController::class, 'index'])
-    ->name('restaurant.index');
+        // Restaurants
+        Route::get('/restaurants', [RestaurantController::class, 'index'])
+            ->name('restaurant.index');
 
-Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])
-    ->name('restaurant.show');
+        Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])
+            ->name('restaurant.show');
 
-Route::get('/restaurants/{id}/book', [RestaurantController::class, 'create'])
-    ->name('restaurant.book');
+        Route::get('/restaurants/{id}/book', [RestaurantController::class, 'create'])
+            ->name('restaurant.book');
 
-Route::post('/restaurants/{id}/book', [RestaurantController::class, 'store'])
-    ->name('restaurant.book.store');
+        Route::post('/restaurants/{id}/book', [RestaurantController::class, 'store'])
+            ->name('restaurant.book.store');
 
-// Event Halls
-Route::prefix('event-halls')->group(function () {
+        // Event Halls
+        Route::prefix('event-halls')->group(function () {
 
-    Route::get('/', [EventHallController::class, 'index'])->name('event-halls.index');
+            Route::get('/', [EventHallController::class, 'index'])->name('event-halls.index');
 
-    Route::get('/{id}', [EventHallController::class, 'show'])->name('event-halls.show');
+            Route::get('/{id}', [EventHallController::class, 'show'])->name('event-halls.show');
 
-    Route::get('/{id}/book', [EventHallController::class, 'create'])->name('event-halls.book');
+            Route::get('/{id}/book', [EventHallController::class, 'create'])->name('event-halls.book');
 
-    Route::post('/{id}/book', [EventHallController::class, 'store'])->name('event-halls.store');
-});
-use App\Http\Controllers\StaffLoginController;
+            Route::post('/{id}/book', [EventHallController::class, 'store'])->name('event-halls.store');
+        });
+        
 
 
 
@@ -279,5 +285,23 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::resource('restaurant-tables', RestaurantTableController::class)
         ->except(['show','destroy']);
+
+});
+
+use App\Http\Controllers\Admin\HomepageImageController;
+
+Route::middleware(['auth','role:Admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+    Route::get('/homepage-images', [HomepageImageController::class,'index'])
+        ->name('homepage-images.index');
+
+    Route::post('/homepage-images/{id}', [HomepageImageController::class,'update'])
+        ->name('homepage-images.update');
+
+    Route::delete('/homepage-images/{id}', [HomepageImageController::class,'delete'])
+        ->name('homepage-images.delete');
 
 });

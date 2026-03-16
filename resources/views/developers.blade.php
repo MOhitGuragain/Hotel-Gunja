@@ -35,7 +35,7 @@ Er. Pranaya Nakarmi
 </h3>
 
 <p class="dev-role">
-Technology Head
+Technology Head /CEO
 </p>
 
 <p class="dev-desc">

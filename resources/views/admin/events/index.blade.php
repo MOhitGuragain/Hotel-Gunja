@@ -11,6 +11,7 @@
     <th>Title</th>
     <th>Date</th>
     <th>Location</th>
+    <th>Status</th>
     <th>Action</th>
 </tr>
 
@@ -19,7 +20,25 @@
     <td>{{ $event->title }}</td>
     <td>{{ $event->event_date }}</td>
     <td>{{ $event->location }}</td>
+
     <td>
+@if($event->is_approved)
+    Approved
+@else
+    Pending
+@endif
+</td>
+
+    <td>
+
+        @if(!$event->is_approved)
+        <form method="POST" action="{{ route('admin.events.approve', $event->id) }}">
+            @csrf
+            <button>Approve</button>
+        </form>
+        @endif
+
+
         <form method="POST" action="{{ route('admin.events.destroy', $event->id) }}">
             @csrf
             @method('DELETE')

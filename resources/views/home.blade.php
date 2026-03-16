@@ -202,16 +202,68 @@
 
             {{-- CARD --}}
             @php
-                $rooms = [
-                    ['name'=>'Presidential Suite','price'=>'15,000','img'=>'https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800','guests'=>'4 Guests','size'=>'1200 sq ft'],
-                    ['name'=>'Suite','price'=>'8,000','img'=>'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800','guests'=>'3 Guests','size'=>'800 sq ft'],
-                    ['name'=>'Super Deluxe','price'=>'5,500','img'=>'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800','guests'=>'3 Guests','size'=>'500 sq ft'],
-                    ['name'=>'Deluxe','price'=>'4,000','img'=>'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800','guests'=>'2 Guests','size'=>'400 sq ft'],
-                    ['name'=>'Family Room','price'=>'6,500','img'=>'https://images.unsplash.com/photo-1560185127-6a7e7c5b8f6c?w=800','guests'=>'5 Guests','size'=>'650 sq ft'],
-                    ['name'=>'Twin Bed Room','price'=>'4,500','img'=>'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=800','guests'=>'2 Guests','size'=>'380 sq ft'],
-                ];
-            @endphp
+$rooms = [
+    [
+        'name'=>'Presidential Suite',
+        'price'=>'15,000',
+        'img'=> !empty($homepageImages['presidential_suite'] ?? null)
+                ? asset('storage/'.$homepageImages['presidential_suite'])
+                : 'https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800',
+        'guests'=>'4 Guests',
+        'size'=>'1200 sq ft'
+    ],
 
+    [
+        'name'=>'Suite',
+        'price'=>'8,000',
+        'img'=> !empty($homepageImages['suite'] ?? null)
+                ? asset('storage/'.$homepageImages['suite'])
+                : 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800',
+        'guests'=>'3 Guests',
+        'size'=>'800 sq ft'
+    ],
+
+    [
+        'name'=>'Super Deluxe',
+        'price'=>'5,500',
+        'img'=> !empty($homepageImages['super_deluxe'] ?? null)
+                ? asset('storage/'.$homepageImages['super_deluxe'])
+                : 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800',
+        'guests'=>'3 Guests',
+        'size'=>'500 sq ft'
+    ],
+
+    [
+        'name'=>'Deluxe',
+        'price'=>'4,000',
+        'img'=> !empty($homepageImages['deluxe'] ?? null)
+                ? asset('storage/'.$homepageImages['deluxe'])
+                : 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800',
+        'guests'=>'2 Guests',
+        'size'=>'400 sq ft'
+    ],
+
+    [
+        'name'=>'Family Room',
+        'price'=>'6,500',
+        'img'=> !empty($homepageImages['family'] ?? null)
+                ? asset('storage/'.$homepageImages['family'])
+                : 'https://images.unsplash.com/photo-1560185127-6a7e7c5b8f6c?w=800',
+        'guests'=>'5 Guests',
+        'size'=>'650 sq ft'
+    ],
+
+    [
+        'name'=>'Twin Bed Room',
+        'price'=>'4,500',
+        'img'=> !empty($homepageImages['twin_bed_super_deluxe'] ?? null)
+                ? asset('storage/'.$homepageImages['twin_bed_super_deluxe'])
+                : 'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=800',
+        'guests'=>'2 Guests',
+        'size'=>'380 sq ft'
+    ],
+];
+@endphp
             @foreach($rooms as $room)
             <div class="group bg-white rounded-xl overflow-hidden
                         border border-gray-200
@@ -285,7 +337,7 @@
 </section>
 
 
-{{-- ===== AMENITIES SECTION (Elegant AI – Exact) ===== --}}
+{{-- ===== AMENITIES SECTION  ===== --}}
 <section id="amenities" class="relative py-24 bg-white overflow-hidden scroll-mt-24">
 
     {{-- Background Pattern --}}
@@ -394,7 +446,9 @@ Visual Journey
 
 <!-- Image 1 -->
 <div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
-<img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+<img src="{{ $homepageImages['visual1'] 
+        ? asset('storage/'.$homepageImages['visual1'])
+        : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'}}"
 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
 <div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
@@ -412,7 +466,9 @@ Hotel Exterior
 
 <!-- Image 2 -->
 <div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
-<img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800"
+<img src="{{$homepageImages['visual2'] 
+        ? asset('storage/'.$homepageImages['visual2'])
+        :'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800'}}"
 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
 <div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
@@ -430,7 +486,9 @@ Hotel Lobby
 
 <!-- Image 3 -->
 <div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
-<img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800"
+<img src="{{ $homepageImages['visual3'] 
+        ? asset('storage/'.$homepageImages['visual3'])
+        :'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800'}}"
 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
 <div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
@@ -448,7 +506,9 @@ Swimming Pool
 
 <!-- Image 4 -->
 <div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
-<img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800"
+<img src="{{$homepageImages['visual4'] 
+        ? asset('storage/'.$homepageImages['visual4'])
+        :'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800'}}"
 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
 <div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
@@ -466,7 +526,9 @@ Hotel Restaurant
 
 <!-- Image 5 -->
 <div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
-<img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800"
+<img src="{{$homepageImages['visual5'] 
+        ? asset('storage/'.$homepageImages['visual5'])
+        :'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800'}}"
 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
 <div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
@@ -484,7 +546,9 @@ Hotel Bar
 
 <!-- Image 6 -->
 <div class="relative h-80 overflow-hidden rounded-2xl group cursor-pointer shadow-lg">
-<img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+<img src="{{$homepageImages['visual6'] 
+        ? asset('storage/'.$homepageImages['visual6'])
+        :'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'}}"
 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
 <div class="absolute inset-0 bg-gradient-to-t from-[#800020]/80 via-transparent to-transparent
@@ -493,7 +557,7 @@ opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end jus
 <p class="text-white font-semibold text-lg transform translate-y-4
 group-hover:translate-y-0 transition-transform duration-500"
 style="font-family: 'Playfair Display', serif;">
-Spa Area
+Garden Area
 </p>
 
 </div>
@@ -564,90 +628,133 @@ Spa Area
 
 
 {{-- ===== UPCOMING EVENTS SECTION ===== --}}
+
 <section class="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
 
-    <div class="max-w-7xl mx-auto">
+<div class="max-w-7xl mx-auto">
 
-        {{-- Header --}}
-        <div class="text-center mb-16">
-            <p class="text-[#D4AF37] tracking-[0.3em] text-sm uppercase mb-4">
-                Events
-            </p>
+{{-- Header --}}
+<div class="text-center mb-16">
+<p class="text-[#D4AF37] tracking-[0.3em] text-sm uppercase mb-4">
+Events
+</p>
 
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
-                style="font-family: 'Playfair Display', serif;">
-                Upcoming Events
-            </h2>
+<h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+style="font-family: 'Playfair Display', serif;">
+Upcoming Events
+</h2>
 
-            <div class="w-24 h-1 bg-gradient-to-r from-[#800020] to-[#D4AF37] mx-auto mb-6"></div>
+<div class="w-24 h-1 bg-gradient-to-r from-[#800020] to-[#D4AF37] mx-auto mb-6"></div>
+</div>
 
-            {{-- <p class="text-lg text-gray-600 max-w-2xl mx-auto"
-               style="font-family: 'Cormorant Garamond', serif;">
-                Discover special events and experiences happening at our hotel.
-            </p> --}}
-        </div>
 
-        {{-- Events Grid --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+{{-- Events Grid --}}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
-            @forelse($events as $event)
-            <div class="group bg-white rounded-xl overflow-hidden
-                        border border-gray-200
-                        transition-all duration-500
-                        hover:-translate-y-3
-                        hover:shadow-[0_25px_50px_-15px_rgba(212,175,55,0.25)]
-                        hover:border-[#D4AF37]/40">
+@forelse($events as $event)
 
-                {{-- Image (optional placeholder) --}}
-                {{-- <div class="relative h-56 bg-gray-200">
-                    <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=800"
-                         class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+<div class="group relative bg-white rounded-2xl overflow-hidden
+border border-gray-200 transition duration-500
+hover:-translate-y-3 hover:shadow-2xl hover:border-[#D4AF37]/50">
 
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent"></div>
+{{-- Image --}}
+<div class="relative h-56 overflow-hidden">
 
-                    {{-- Date Badge --}}
-                    {{-- <div class="absolute top-4 right-4 bg-[#D4AF37] px-4 py-2 font-bold text-black">
-                        {{ \Carbon\Carbon::parse($event->event_date)->format('M d') }}
-                    </div>
-                </div> --}} 
+<img
+src="{{ $event->image ? asset('storage/'.$event->image) : 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800' }}"
+class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
 
-                {{-- Content --}}
-                <div class="p-6 " >
+{{-- Dark overlay --}}
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent"></div>
 
-                    <h3 class="text-2xl font-semibold mb-2"
-                        style="font-family:'Playfair Display', serif;">
-                        {{ $event->title }}
-                    </h3>
+{{-- Date badge --}}
+<div class="absolute top-4 right-4 bg-[#D4AF37] text-black text-sm font-bold px-4 py-2 rounded shadow">
+{{ \Carbon\Carbon::parse($event->event_date)->format('M d') }}
+</div>
 
-                    <p class="text-sm text-gray-500 mb-2">
-                        📍 {{ $event->location ?? 'Hotel Gunja' }}
-                    </p>
+{{-- Upcoming badge --}}
+<div class="absolute top-4 left-4 bg-[#800020] text-white text-xs px-3 py-1 rounded-full shadow">
+Upcoming
+</div>
 
-                    <p class="text-gray-600 mb-4 max-h-20 overflow-hidden">
-                        {{ $event->description }}
-                    </p>
+</div>
 
-                    <p class="text-[#D4AF37] font-semibold">
-                        {{ \Carbon\Carbon::parse($event->event_date)->format('F d, Y') }}
-                    </p>
 
-                </div>
-            </div>
+{{-- Content --}}
+<div class="p-6 space-y-3">
 
-            @empty
+{{-- Title --}}
+<h3 class="text-xl font-bold text-gray-900"
+style="font-family:'Playfair Display', serif;">
+{{ $event->title }}
+</h3>
 
-            {{-- Empty Message --}}
-            <div class="col-span-3 text-center py-12">
-                <p class="text-gray-500 text-lg">
-                    No upcoming events available.
-                </p>
-            </div>
+{{-- Location --}}
+<div class="flex items-center text-sm text-gray-500 gap-2">
+<span>📍</span>
+<span>{{ $event->location ?? 'Hotel Gunja' }}</span>
+</div>
 
-            @endforelse
+{{-- Time --}}
+@if($event->event_time)
+<div class="flex items-center text-sm text-gray-500 gap-2">
+<span>⏰</span>
+<span>{{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}</span>
+</div>
+@endif
 
-        </div>
-    </div>
+{{-- Description --}}
+<p class="text-gray-600 text-sm leading-relaxed max-h-16 overflow-hidden">
+{{ $event->description }}
+</p>
+
+{{-- Date --}}
+<p class="text-[#D4AF37] font-semibold text-sm">
+{{ \Carbon\Carbon::parse($event->event_date)->format('F d, Y') }}
+</p>
+
+{{-- Countdown --}}
+<div
+class="inline-block bg-[#800020] text-white px-4 py-1 rounded text-xs font-semibold tracking-wide"
+id="countdown-{{ $event->id }}"
+data-date="{{ $event->event_date }} {{ $event->event_time ?? '23:59:59' }}">
+</div>
+
+{{-- Button --}}
+{{-- <div class="pt-3">
+
+<a href="#"
+class="inline-block text-sm font-semibold text-[#800020] border border-[#800020]
+px-4 py-2 rounded transition
+hover:bg-[#800020] hover:text-white">
+
+View Details
+
+</a>
+
+</div> --}}
+
+</div>
+
+</div>
+
+@empty
+
+{{-- Empty Message --}}
+<div class="col-span-3 text-center py-16">
+<p class="text-gray-500 text-lg">
+No upcoming events available.
+</p>
+</div>
+
+@endforelse
+
+</div>
+
+</div>
 </section>
+
+
 
 {{-- RESTURANTS & DINING --}}
 <section class="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
@@ -676,8 +783,21 @@ Spa Area
 
                 {{-- Image --}}
                 <div class="relative h-64 overflow-hidden group">
-                    <img src="{{ asset('storage/' . $restaurant->image) }}"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                @php
+                $imageMap = [
+                    'Gunja Dining & Bar' => 'gunja_dining_bar',
+                    'Gunja Atomic Bar' => 'gunja_atomic_bar',
+                    'Gunja Sattal' => 'gunja_sattal',
+                    'Garden Side Restaurant' => 'garden_side_restaurant'
+                ];
+
+                $key = $imageMap[$restaurant->name] ?? null;
+                @endphp
+
+                <img src="{{ $key && !empty($homepageImages[$key]) 
+                        ? asset('storage/'.$homepageImages[$key]) 
+                        : asset('images/default-restaurant.jpg') }}"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                 </div>
 
                 {{-- Content --}}
@@ -758,8 +878,20 @@ Spa Area
 
                 {{-- Image --}}
                 <div class="relative h-56 overflow-hidden group">
-                    <img src="{{ asset('storage/' . $hall->image) }}"
-                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    @php
+                    $hallImageMap = [
+                        'Begnas Hall' => 'begnas_hall',
+                        'Se Phoksundo Hall' => 'phoksundo_hall',
+                        'Tilicho Hall' => 'tilicho_hall'
+                    ];
+
+                    $key = $hallImageMap[$hall->name] ?? null;
+                    @endphp
+
+                    <img src="{{ $key && !empty($homepageImages[$key]) 
+                            ? asset('storage/'.$homepageImages[$key]) 
+                            : asset('images/default-hall.jpg') }}"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent"></div>
 
@@ -779,6 +911,7 @@ Spa Area
 
                     <p class="text-gray-600 mb-4 max-h-20 overflow-hidden">
                         {{ Str::limit($hall->description, 100) }}
+                    </p>
 
                         <a href="{{ route('event-halls.show', $hall->id) }}"
                        class="mt-auto inline-block bg-[#800020] text-white px-4 py-2 rounded hover:bg-[#600018] text-center">
@@ -1022,5 +1155,42 @@ Spa Area
     </div>
 </section>
 
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const countdowns = document.querySelectorAll("[id^='countdown-']");
+
+    countdowns.forEach(function(el){
+
+        const eventDate = new Date(el.dataset.date).getTime();
+
+        const timer = setInterval(function(){
+
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if(distance < 0){
+                el.innerHTML = "Event Started";
+                clearInterval(timer);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+            const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+            const seconds = Math.floor((distance % (1000*60))/1000);
+
+            el.innerHTML =
+                "⏳ " + days + "d "
+                + hours + "h "
+                + minutes + "m "
+                + seconds + "s";
+
+        },1000);
+
+    });
+
+});
+</script>
 
 @endsection

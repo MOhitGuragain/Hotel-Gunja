@@ -9,10 +9,28 @@
 ```
 {{-- IMAGE --}}
 <div class="relative group overflow-hidden rounded-2xl shadow-xl">
-    <img
-        src="{{ $category->image_url ?? 'https://images.unsplash.com/photo-1591088398332-8a7791972843?w=1600' }}"
-        class="w-full h-[520px] object-cover transition-transform duration-700 group-hover:scale-110"
-    >
+    @php
+$roomImageMap = [
+    'Presidential Suite' => 'presidential_suite',
+    'Suite' => 'suite',
+    'Super Deluxe' => 'super_deluxe',
+    'Deluxe' => 'deluxe',
+    'Family Room' => 'family',
+    'Standard' => 'standard',
+    'Twin Bed Super Deluxe' => 'twin_bed_super_deluxe',
+    'Twin Bed Deluxe' => 'twin_bed_deluxe',
+    'Twin Bed Standard' => 'twin_bed_standard'
+];
+
+$key = $roomImageMap[$category->name] ?? null;
+@endphp
+
+<img
+src="{{ $key && !empty($homepageImages[$key])
+        ? asset('storage/'.$homepageImages[$key])
+        : 'https://images.unsplash.com/photo-1591088398332-8a7791972843?w=1600' }}"
+class="w-full h-[520px] object-cover transition-transform duration-700 group-hover:scale-110"
+>
 
     {{-- MIN PRICE --}}
     @php

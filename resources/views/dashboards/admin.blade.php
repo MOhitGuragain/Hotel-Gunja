@@ -106,4 +106,17 @@
             Manage Gallery
         </a>
     </div>
+
+     <!-- HomePage Images management -->
+    <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Homepage Images</h3>
+        <p class="text-gray-500 mb-4 text-sm">
+            Upload or replace homepage room, restaurant, visual journey and event hall images
+        </p>
+        <a href="{{ route('admin.homepage-images.index') }}"
+           class="block text-center bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+            Manage Homepage Images
+        </a>
+    </div>
+
 @endsection

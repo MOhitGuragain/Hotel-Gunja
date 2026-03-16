@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\Restaurant;
 use App\Models\EventHall;
 use App\Models\GalleryImage;
+use App\Models\HomepageImage;
 
 class HomeController extends Controller
 {
@@ -25,10 +26,11 @@ class HomeController extends Controller
     $featuredRoom = Room::first();
 
     // Upcoming events
-    $events = Event::where('event_date', '>=', now())
-        ->orderBy('event_date')
-        ->take(3)
-        ->get();
+    $events = Event::where('is_approved', true)
+    ->whereDate('event_date', '>=', now())
+    ->orderBy('event_date')
+    ->take(3)
+    ->get();
 
     // Restaurants
     $restaurants = Restaurant::latest()->take(4)->get();
@@ -43,13 +45,18 @@ class HomeController extends Controller
     ->limit(30)
     ->get();
 
+
+    //HomePage images 
+    $homepageImages = HomepageImage::pluck('image','section');
+
     return view('home', compact(
             'topReviews',
             'featuredRoom',
             'events',
             'restaurants',
             'eventHalls',
-            'galleryImages'
+            'galleryImages',
+            'homepageImages'
         ));
     }
 }
