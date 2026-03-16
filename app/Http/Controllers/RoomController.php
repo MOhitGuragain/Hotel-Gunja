@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RoomCategory;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
@@ -16,7 +17,12 @@ public function index(Request $request)
     $checkIn  = $request->check_in;
     $checkOut = $request->check_out;
 
+     // Load room categories with plans and rooms
     $categories = RoomCategory::with(['plans','rooms'])->get();
+
+    // Load homepage images
+    $homepageImages = \DB::table('homepage_images')
+        ->pluck('image', 'section');
 
     if ($checkIn && $checkOut) {
 
@@ -35,20 +41,25 @@ public function index(Request $request)
     return view('rooms.index', compact(
         'categories',
         'checkIn',
-        'checkOut'
+        'checkOut',
+        'homepageImages'
     ));
 }
 
     /**
-     * Show single room category details
-     * (plans + rooms inside that category)
+     * Show a specific room category
      */
    public function show(Request $request, $id)
 {
     $checkIn  = $request->check_in;
     $checkOut = $request->check_out;
 
+    // Get room category with plans and rooms
     $category = RoomCategory::with(['plans','rooms'])->findOrFail($id);
+
+    // Load homepage images
+        $homepageImages = DB::table('homepage_images')
+            ->pluck('image', 'section');
 
     if ($checkIn && $checkOut) {
 
@@ -63,7 +74,8 @@ public function index(Request $request)
     return view('rooms.show', compact(
         'category',
         'checkIn',
-        'checkOut'
+        'checkOut',
+        'homepageImages'
     ));
 }
 }

@@ -217,9 +217,9 @@ of the city.
 
                 <!-- Right: Privacy & Terms -->
                 <div class="flex space-x-6">
-                    <a href="#" class="hover:text-[#D4AF37] transition">Privacy Policy</a>
+                    <a href="##" class="hover:text-[#D4AF37] transition">Privacy Policy</a>
                     <span class="opacity-40">|</span>
-                    <a href="#" class="hover:text-[#D4AF37] transition">Terms of Service</a>
+                    <a href="##" class="hover:text-[#D4AF37] transition">Terms of Service</a>
                 </div>
 
             </div>
@@ -232,11 +232,11 @@ of the city.
 
             <!-- CREDIT -->
             <p class="mt-5  text-xs text-gray-400 font-bold text-center">
-                Designed & Developed by <br>
+                Developed by <br>
                 <a href="/developers" 
                 class="text-[#D4AF37] font-medium hover:underline"
                 target="_blank">
-                    Rupak Raut & Mohit Guragain
+                    Venture Four Technology Pvt. Ltd.
                 </span>
             </p>
 
