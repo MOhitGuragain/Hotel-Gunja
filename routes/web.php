@@ -201,32 +201,21 @@ Route::prefix('staff')->group(function () {
 use App\Http\Controllers\DashboardController;
 
 
-Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard');
-
-
-/*
-| Admin Dashboard
-*/
-Route::middleware(['auth', 'role:Admin'])
-    ->get('/dashboard/admin', [DashboardController::class, 'admin'])
+// Admin Dashboard
+Route::middleware(['role:Admin'])->get('/dashboard/admin', [DashboardController::class, 'admin'])
     ->name('dashboard.admin');
 
-
-/*
-| Receptionist Dashboard
-*/
-Route::middleware(['auth', 'role:Receptionist'])
-    ->get('/dashboard/receptionist', [DashboardController::class, 'receptionist'])
+// Receptionist Dashboard
+Route::middleware(['role:Receptionist'])->get('/dashboard/receptionist', [DashboardController::class, 'receptionist'])
     ->name('dashboard.receptionist');
 
-
-/*
-| Cashier Dashboard
-*/
-Route::middleware(['auth', 'role:Cashier'])
-    ->get('/dashboard/cashier', [DashboardController::class, 'cashier'])
+// Cashier Dashboard
+Route::middleware(['role:Cashier'])->get('/dashboard/cashier', [DashboardController::class, 'cashier'])
     ->name('dashboard.cashier');
+
+// Optional general dashboard route (if needed)
+Route::middleware(['role:Admin,Receptionist,Cashier'])->get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
 
     /*
 | Billing Routes

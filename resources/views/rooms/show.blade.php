@@ -82,11 +82,7 @@ $key = $roomImageMap[$category->name] ?? null;
 
 {{-- INFO --}}
 <div class="flex flex-wrap gap-6 mb-10 text-gray-700">
-
-<span class="px-5 py-2 border rounded-full">
-    👥 Up to {{ $category->max_adults }} Guests
-</span>
-
+    
 <span class="px-5 py-2 border rounded-full">
     🛏 {{ $category->bed_type ?? 'Comfort Bed' }}
 </span>

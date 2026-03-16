@@ -41,7 +41,6 @@ No Rooms Available
 @endif
 
 <div class="space-y-2 text-sm text-gray-200">
-<p>✔ Max Guests: {{ $category->max_adults }}</p>
 <p>✔ Secure Booking</p>
 <p>✔ Instant Confirmation</p>
 </div>
