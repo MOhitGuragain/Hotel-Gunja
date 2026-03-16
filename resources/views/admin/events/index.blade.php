@@ -1,146 +1,90 @@
-{{-- Event List (Admin) --}}
-
-<h2>Events</h2>
-
-<a href="{{ route('admin.events.create') }}">
-    Add Event
-</a>
-
-<table border="1" cellpadding="10">
-<tr>
-    <th>Title</th>
-    <th>Date</th>
-    <th>Location</th>
-    <th>Status</th>
-    <th>Action</th>
-</tr>
-
-@foreach($events as $event)
-<tr>
-    <td>{{ $event->title }}</td>
-    <td>{{ $event->event_date }}</td>
-    <td>{{ $event->location }}</td>
-
-    <td>
-@if($event->is_approved)
-    Approved
-@else
-    Pending
-@endif
-</td>
-
-    <td>
-
-        @if(!$event->is_approved)
-        <form method="POST" action="{{ route('admin.events.approve', $event->id) }}">
-            @csrf
-            <button>Approve</button>
-        </form>
-        @endif
-
-
-        <form method="POST" action="{{ route('admin.events.destroy', $event->id) }}">
-            @csrf
-            @method('DELETE')
-            <button>Delete</button>
-        </form>
-    </td>
-</tr>
-@endforeach
-
-</table>
-
-{{ $events->links() }}
 @extends('admin.layouts.app')
 
 @section('content')
-
 <div class="max-w-6xl mx-auto px-6 py-10">
 
-```
-{{-- PAGE HEADER --}}
-<div class="flex items-center justify-between mb-8">
-    <div>
-        <h1 class="text-3xl font-bold text-gray-800">Event Management</h1>
-        <p class="text-gray-500 text-sm">Manage upcoming hotel events</p>
+    {{-- PAGE HEADER --}}
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">Event Management</h1>
+            <p class="text-gray-500 text-sm">Manage upcoming hotel events</p>
+        </div>
+
+        <a href="{{ route('admin.events.create') }}"
+           class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow">
+            + Add Event
+        </a>
     </div>
 
-    <a href="{{ route('admin.events.create') }}"
-       class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow">
-        + Add Event
-    </a>
-</div>
+    {{-- EVENT TABLE CARD --}}
+    <div class="bg-white shadow-xl rounded-xl overflow-hidden">
+        <table class="w-full text-left">
+            {{-- TABLE HEADER --}}
+            <thead class="bg-gray-100 text-gray-600 text-sm uppercase">
+                <tr>
+                    <th class="px-6 py-4">Title</th>
+                    <th class="px-6 py-4">Date</th>
+                    <th class="px-6 py-4">Location</th>
+                    <th class="px-6 py-4 text-center">Status</th>
+                    <th class="px-6 py-4 text-center">Action</th>
+                </tr>
+            </thead>
 
+            {{-- TABLE BODY --}}
+            <tbody class="divide-y">
+                @foreach($events as $event)
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 font-semibold text-gray-800">
+                        {{ $event->title }}
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">
+                        {{ $event->event_date }}
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">
+                        {{ $event->location }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        @if($event->is_approved)
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Approved</span>
+                        @else
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">Pending</span>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 text-center flex justify-center gap-2">
 
-{{-- EVENT TABLE CARD --}}
-<div class="bg-white shadow-xl rounded-xl overflow-hidden">
+                        {{-- Approve Button --}}
+                        @if(!$event->is_approved)
+                        <form method="POST" action="{{ route('admin.events.approve', $event->id) }}">
+                            @csrf
+                            <button type="submit"
+                                class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-1 rounded">
+                                Approve
+                            </button>
+                        </form>
+                        @endif
 
-    <table class="w-full text-left">
+                        {{-- Delete Button --}}
+                        <form method="POST" action="{{ route('admin.events.destroy', $event->id) }}"
+                              onsubmit="return confirm('Delete this event?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-1 rounded">
+                                Delete
+                            </button>
+                        </form>
 
-        {{-- TABLE HEADER --}}
-        <thead class="bg-gray-100 text-gray-600 text-sm uppercase">
-            <tr>
-                <th class="px-6 py-4">Title</th>
-                <th class="px-6 py-4">Date</th>
-                <th class="px-6 py-4">Location</th>
-                <th class="px-6 py-4 text-center">Action</th>
-            </tr>
-        </thead>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
-        {{-- TABLE BODY --}}
-        <tbody class="divide-y">
-
-            @foreach($events as $event)
-
-            <tr class="hover:bg-gray-50 transition">
-
-                <td class="px-6 py-4 font-semibold text-gray-800">
-                    {{ $event->title }}
-                </td>
-
-                <td class="px-6 py-4 text-gray-600">
-                    {{ $event->event_date }}
-                </td>
-
-                <td class="px-6 py-4 text-gray-600">
-                    {{ $event->location }}
-                </td>
-
-                <td class="px-6 py-4 text-center">
-
-                    <form method="POST"
-                          action="{{ route('admin.events.destroy', $event->id) }}"
-                          onsubmit="return confirm('Delete this event?')">
-
-                        @csrf
-                        @method('DELETE')
-
-                        <button
-                            class="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-1 rounded">
-                            Delete
-                        </button>
-
-                    </form>
-
-                </td>
-
-            </tr>
-
-            @endforeach
-
-        </tbody>
-
-    </table>
-
-</div>
-
-
-{{-- PAGINATION --}}
-<div class="mt-6">
-    {{ $events->links() }}
-</div>
-```
+    {{-- PAGINATION --}}
+    <div class="mt-6">
+        {{ $events->links() }}
+    </div>
 
 </div>
-
 @endsection
