@@ -94,6 +94,11 @@
             </button>
         </form>
 
+        </form>
+        <a href="{{ route('password.request') }}" class="text-sm text-gray-300 hover:text-white">
+                    Forgot Password
+                    </a>
+
         <!-- Footer -->
         <div class="mt-8 text-center text-xs text-gray-400">
             © {{ date('Y') }} Hotel Gunja. All rights reserved.

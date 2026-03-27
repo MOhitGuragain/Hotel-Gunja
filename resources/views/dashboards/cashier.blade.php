@@ -4,7 +4,7 @@
 
 <div class="max-w-7xl mx-auto px-6 py-10">
 
-```
+
 <!-- PAGE HEADER -->
 <div class="flex justify-between items-center mb-8">
     <div>
@@ -220,7 +220,7 @@
     </table>
 
 </div>
-```
+
 
 </div>
 

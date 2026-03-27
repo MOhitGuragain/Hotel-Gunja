@@ -104,7 +104,7 @@ class RestaurantController extends Controller
 
         $request->validate([
             'guest_name'     => 'required|string|max:255',
-            'contact_number' => 'required|string|max:20',
+            'contact_number' => ['required', 'regex:/^9[0-9]{9}$/'],
             'booking_date'   => 'required|date|after_or_equal:today',
             'guests'         => 'required|in:2,4,6,8',
             'table_id'       => 'required|exists:restaurant_tables,id',

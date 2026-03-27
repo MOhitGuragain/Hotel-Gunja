@@ -60,10 +60,12 @@ required>
 Number of Guests
 </label>
 
-<input type="number"
+<input type="text"
 name="guests"
 value="{{ old('guests') }}"
 min="1"
+inputmode="numeric"
+oninput="this.value = this.value.replace(/[^0-9]/g, '')"
 max="{{ $hall->max_capacity }}"
 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#800020] focus:outline-none"
 placeholder="Enter expected guests"
@@ -100,9 +102,13 @@ required>
 Contact Number
 </label>
 
-<input type="text"
+<input type="tel"
 name="contact_number"
 value="{{ old('contact_number') }}"
+pattern="9[0-9]{9}"
+maxlength="10"
+inputmode="numeric"
+oninput="this.value = this.value.replace(/[^0-9]/g, '')"
 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#800020] focus:outline-none"
 placeholder="Phone Number"
 required>

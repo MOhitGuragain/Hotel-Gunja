@@ -178,10 +178,13 @@ required>
 Contact Number
 </label>
 
-<input
-type="text"
+<input type="tel"
 name="contact_number"
 value="{{ old('contact_number') }}"
+pattern="9[0-9]{9}"
+maxlength="10"
+inputmode="numeric"
+oninput="this.value = this.value.replace(/[^0-9]/g, '')"
 class="w-full border rounded-lg px-4 py-3"
 required>
 

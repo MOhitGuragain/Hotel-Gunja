@@ -4,22 +4,30 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\GuestBookingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\EventHallController;
+use App\Http\Controllers\StaffLoginController;
+use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\EventController;
-use App\Http\Controllers\RestaurantController;
-use App\Http\Controllers\EventHallController;
-use App\Http\Controllers\AdminGalleryController;
 use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\Admin\RestaurantOrderController;
-use App\Http\Controllers\StaffLoginController;
-// use App\Http\Controllers\Admin\HomepageImageController;
+use App\Http\Controllers\Admin\AdminRoomController;
+use App\Http\Controllers\Admin\MenuItemController;
+use App\Http\Controllers\Admin\RestaurantTableController;
+use App\Http\Controllers\Admin\HomepageImageController;
+use App\Http\Controllers\AdminGalleryController;
 
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //developer info page
 Route::view('/developers', 'developers');
+
+// About Us
+        Route::view('/about-us', 'about')->name('about');
 
 // Authentication routes
 Route::middleware(['auth', 'role:Admin,Receptionist'])
@@ -198,7 +206,6 @@ Route::prefix('staff')->group(function () {
     Route::post('/logout', [StaffLoginController::class, 'logout'])->name('auth.staff-logout');
 });
 
-use App\Http\Controllers\DashboardController;
 
 
 // Admin Dashboard
@@ -239,17 +246,17 @@ Route::middleware(['auth', 'role:Cashier'])
             
     });
     Route::get('/admin/invoice/{bookingId}', 
-    [App\Http\Controllers\Admin\BillingController::class, 'downloadInvoice']
-)->name('invoice.download');
+    [App\Http\Controllers\Admin\BillingController::class, 'downloadInvoice'])
+    ->name('invoice.download');
 
-Route::get('/admin/invoice/{bookingId}/view', 
-    [App\Http\Controllers\Admin\BillingController::class, 'viewInvoice']
-)->name('invoice.view');
+    Route::get('/admin/invoice/{bookingId}/view', 
+        [App\Http\Controllers\Admin\BillingController::class, 'viewInvoice'])
+        ->name('invoice.view');
 
-Route::get('/reviews/create', [ReviewController::class, 'create'])
+    Route::get('/reviews/create', [ReviewController::class, 'create'])
             ->name('reviews.create');
 
-use App\Http\Controllers\Admin\AdminRoomController;
+
 
 Route::prefix('admin')
     ->middleware(['auth', 'role:Admin'])
@@ -259,7 +266,7 @@ Route::prefix('admin')
         Route::resource('rooms', AdminRoomController::class);
 });
 
-use App\Http\Controllers\Admin\MenuItemController;
+
 
 Route::prefix('admin')->name('admin.')->group(function(){
 
@@ -268,7 +275,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 });
 
-use App\Http\Controllers\Admin\RestaurantTableController;
+
 
 Route::prefix('admin')->name('admin.')->group(function(){
 
@@ -277,7 +284,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 });
 
-use App\Http\Controllers\Admin\HomepageImageController;
+
 
 Route::middleware(['auth','role:Admin'])
     ->prefix('admin')
@@ -294,3 +301,27 @@ Route::middleware(['auth','role:Admin'])
         ->name('homepage-images.delete');
 
 });
+
+// ==============================
+// PASSWORD RESET ROUTES
+// ==============================
+
+
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
+// Show forgot password form
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+
+// Send reset link email
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
+
+// Show reset form
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+// Handle reset
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
+    ->name('password.update');

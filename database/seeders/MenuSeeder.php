@@ -71,7 +71,7 @@ class MenuSeeder extends Seeder
                     'name' => $item['name'],
                     'description' => $item['description'],
                     'price' => $item['price'],
-                    'status' => 1   // since your column is status, not is_available
+                    'status' => 'available'   // since your column is status, not is_available
                 ]);
             }
         }

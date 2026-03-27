@@ -1,3 +1,4 @@
+
 @php
     function navActive($path) {
         return request()->is($path) ? 'nav-active' : '';
@@ -39,12 +40,9 @@
                             relative overflow-hidden transition-transform duration-500
                 group-hover:scale-110">
 
-                    <!-- Hover overlay glow  -->
-                    {{-- <div class="absolute inset-0 bg-gradient-to-br from-[#D4AF37] to-transparent
-                                opacity-0 group-hover:opacity-30 transition-opacity duration-500 z-10"></div> --}}
-
+                
                     <!-- Logo Image (Scaled Up) -->
-                    <img src="{{ asset('Images/logo.jpg') }}"
+                    <img src="{{ asset('images/logo.jpg') }}"
                         alt="Logo"
                         class="w-full h-full object-cover rounded-lg
                                 scale-[1.70] origin-center ">
@@ -106,7 +104,7 @@
 
                 {{-- Book Now  --}}
                 @if(!empty($featuredRoom))
-                    <a href="{{ route('rooms.book', $featuredRoom->id) }}"
+                    <a href="{{ route('rooms.index')}}"
                     class="{{ $navItem }} navbar-link group relative">
                     Book Now
                     </a>
@@ -116,6 +114,14 @@
                     Book Now
                     </a>
                 @endif
+                
+                <a href="/about-us"
+                class="{{ $navItem }} navbar-link {{ request()->is('about-us*') ? 'active' : '' }}">
+                    About Us
+                    <span class="absolute bottom-0 h-0.5
+                                bg-gradient-to-r from-[#800020] to-[#D4AF37]
+                                group-hover:w-full group-hover:left-0 "></span>
+                </a>
 
             </nav>
 
@@ -154,6 +160,8 @@
             class="block px-6 py-4 {{ request()->is('360-tour*') ? 'text-[#800020] font-semibold' : '' }}">
             360 Image Tour
         </a>
+        
+
 
         {{-- Book Now --}}
         @if(!empty($featuredRoom))
@@ -168,7 +176,10 @@
             </a>
         @endif
 
-
+        <a href="/about-us"
+            class="block px-6 py-4 {{ request()->is('about*') ? 'text-[#800020] font-semibold' : '' }}">
+            About Us
+        </a>
 
     </div>
 

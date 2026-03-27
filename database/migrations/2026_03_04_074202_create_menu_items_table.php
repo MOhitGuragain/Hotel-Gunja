@@ -21,7 +21,7 @@ return new class extends Migration
     $table->decimal('price', 10, 2);
     $table->text('description')->nullable();
 
-    $table->enum('status', ['available', 'unavailable'])
+    $table->enum('status', ['available', 'reserved'])
           ->default('available');
 
     $table->timestamps();

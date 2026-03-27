@@ -50,7 +50,7 @@ if ($date && !$hall->isAvailable($date)) {
             'event_date'     => 'required|date|after_or_equal:today',
             'guests'         => 'required|integer|min:10|max:' . $hall->max_capacity,
             'guest_name'     => 'required|string|max:255',
-            'contact_number' => 'required|string|max:20',
+            'contact_number' => ['required', 'regex:/^9[0-9]{9}$/'],
             'id_image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 

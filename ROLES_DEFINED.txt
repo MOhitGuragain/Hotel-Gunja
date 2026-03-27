@@ -1,0 +1,43 @@
+Hotel Gunja System
+
+
+Admin User Manual
+
+This document provides a complete operational guide for managing the Hotel Gunja Website and Booking system. It is designed for administrators, receptionists, and staff to efficiently operate, update, and maintain the system.
+The system includes modules for:
+•	Booking management 
+•	Room management 
+•	Restaurant, event and menu handling 
+•	Gallery and homepage images 
+•	Billing and invoices 
+•	Reviews and events
+
+
+
+User Roles & Access
+
+Admin
+•	Full control of system 
+•	Can manage: 
+	Rooms 
+	Homepage images 
+	Gallery 
+	Events 
+	Reviews 
+	Restaurant & Event halls 
+	Billing 
+	Can add Images on gallery, rooms, restaurants and dining
+
+Receptionist
+	Manage bookings 
+	Approve/reject reservations 
+
+Cashier
+	Handle billing & payments
+
+
+Login Roles
+
+	Admin → Full control 
+	Receptionist → Booking & guest handling and order food 
+	Cashier → Bil

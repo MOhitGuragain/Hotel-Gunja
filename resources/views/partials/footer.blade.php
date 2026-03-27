@@ -1,3 +1,4 @@
+
 <footer class="relative bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] text-gray-300 overflow-hidden">
 
     <!-- Decorative lines -->
@@ -12,10 +13,11 @@
             <!-- Brand -->
             <div class="space-y-6">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-gradient-to-br from-[#800020] to-[#D4AF37] p-3 rounded-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <rect x="4" y="2" width="16" height="20" rx="2"/>
-                        </svg>
+                    <div class="bg-gradient-to-br from-[#800020] to-[#600018] p-3 rounded-xl shadow-lg">
+                                    <img src="{{ asset('images/logo.jpg') }}"
+                 alt="Logo"
+                 class="w-12 h-12 object-cover rounded-lg">
+
                     </div>
                     <div>
                         <span class="text-xl font-bold text-white" style="font-family:'Playfair Display', serif;">Hotel Gunja</span>
@@ -23,11 +25,11 @@
                     </div>
                 </div>
 
-                <pre class="text-sm text-gray-400 leading-relaxed" style="font-family:'Cormorant Garamond', serif;">
-Where luxury meets comfort. Experience 
-unparalleled hospitality in the heart 
-of the city.
-                </pre>
+                <p class="text-sm text-gray-400 leading-relaxed" style="font-family:'Cormorant Garamond', serif;">
+                    Where luxury meets comfort. <br>
+                    Experience unparalleled hospitality <br> 
+                    in the heart of the Bardibas city.
+                </p>
 
                 <!-- Social Media -->
                 <h3 class="text-white font-semibold mb-6 text-lg" style="font-family:'Playfair Display', serif;">Connnect With Us</h3>
@@ -113,7 +115,7 @@ of the city.
                         </a>
                     </li>
                     <li>
-                        <a href="/rooms/1/book" class="footer-elegant-link">
+                        <a href="/rooms" class="footer-elegant-link">
                             <span class="hover-line"></span>
                             Book Now
                         </a>
@@ -131,13 +133,13 @@ of the city.
                         </a>
                     </li>
                     <li>
-                        <a href="#Resturants & Dining" class="footer-elegant-link">
+                        <a href="{{ route('restaurant.index') }}" class="footer-elegant-link">
                             <span class="hover-line"></span>
                             Resturants & Dining
                         </a>
                     </li>
                     <li>
-                        <a href="#Events Booking" class="footer-elegant-link">
+                        <a href="{{ route('event-halls.index') }}" class="footer-elegant-link">
                             <span class="hover-line"></span>
                             Events Bookings
                         </a>
@@ -185,7 +187,14 @@ of the city.
                                         A2 2 0 0 1 22 16.92z"></path>
                             </svg>
                         </div>
-                        <span>+977-044-550620</span>
+                        <span>
+                            <a href="tel:044550620" class="block hover:underline">
+                            044-550620
+                            </a> 
+                            <a href="tel:9845387770" class="block hover:underline">
+                            9845387770
+                            </a>
+                        </span>
                     </li>
 
                 <!-- Email -->
@@ -197,11 +206,17 @@ of the city.
                                 <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                             </svg>
                         </div>
-
-                        <a href="mailto:info@hotelgunja.com.np" class="hover:text-[#D4AF37] transition">
-                            hotelgunja@gmail.com
-                        </a>
+                        <span class="flex flex-col">
+                            <a href="mailto:hotelgunja@gmail.com" class="hover:text-[#D4AF37] transition block hover:underline">
+                                hotelgunja@gmail.com
+                            </a>
+                            <a href="mailto:info@hotelgunja.com" class="hover:text-[#D4AF37] transition block hover:underline">
+                                info@hotelgunja.com
+                            </a>
+                        </span>
                     </li>
+                    
+                    
                 </ul>
             </div>
         </div>

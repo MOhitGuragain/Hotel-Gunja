@@ -33,7 +33,7 @@ public function store(Request $request, $categoryId)
         'check_out'      => 'required|date|after:check_in',
         'guests'         => 'required|integer|min:1|max:' . $category->max_adults,
         'guest_name'     => 'required|string|max:255',
-        'contact_number' => 'required|string|max:20',
+        'contact_number' => ['required', 'regex:/^9[0-9]{9}$/'],
         'id_image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
